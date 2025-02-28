@@ -3,6 +3,7 @@
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{xcolor} 
 \usepackage{tikz}    
+\usepackage[french,provide=*]{babel}
 \geometry{left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm} % Définir les marges
 
 \definecolor{companycolor}{RGB}{0,82,155}  
@@ -45,7 +46,7 @@
                     {\Large\textbf{Entreprise:}}\par
                     \vspace{0.3cm}
                     {\Large{Hager Electro}}\par
-                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{hager_logo.png}}%
+                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{Images/hager_logo.png}}%
                 \end{center}
             \end{minipage}
             \hfill
@@ -54,7 +55,7 @@
                     {\Large\textbf{Centre de Formation:}}\par
                     \vspace{0.3cm}
                     {\Large{CFAI Eckbolsheim}}\par
-                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{hager_logo.png}}%
+                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{Images/hager_logo.png}}%
                 \end{center}
             \end{minipage}
         \end{center}
@@ -62,8 +63,108 @@
 }
 
 \date{}
-\begin{document}
-\maketitle{}
 
-Texte de test
+\begin{document}
+    \maketitle{}
+    \tableofcontents
+    \newpage
+
+    \section{Introduction}
+        Hager Electro est une filiale de Hager Group fabriquant principalement des disjoncteurs au sein de
+    plusieurs usines situées majoritairement en Alsace et en Allemagne.
+    Actuellement la qualité de l’air des usines n’est pas analysée, ce qui peut représenter un risque
+    pour la santé des personnes due à de potentielles particules fines.
+    Pour cela, il s’agit d’utiliser un microcontrôleur récupérant les données de capteurs de particules
+    fines puis les envoyant à un serveur permettant le traitement, la visualisation et le stockage de ses
+    données.
+    Actuellement, des serveurs sont en places mais n’ont pas les logiciels requis et aucuns capteurs
+    ne sont présents au sein des usines.
+    \newpage
+
+    \section{Présentation de l'entreprise}
+    \subsection{Localisation}
+    \subsection{Secteur d'activité}
+    \subsection{Chiffres clés}
+    \newpage
+
+    \section{Cahier des charges}
+        L’objectif de ce projet est de pouvoir mesurer la qualité de l’air des usines ainsi que d’envoyer des
+    alertes si des seuils sont dépassés.
+    Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer
+    les données. Il va ensuite les chiffrer via SSL et les envoyer au broker MQTT hébergé sur le
+    serveur Linux.
+    Le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les
+    afficher sur une Dashboard et envoyer des alertes si besoin.
+
+    
+    \subsection{Diagramme de contexte :}
+    Le capteur de QAI effectue des mesures à intervalle régulier, ces mesures sont transmises au
+    microcontrôleur STM32 qui les transmet à son tour au serveur. Le serveur traite les données, les
+    stocke et les affiche sur une Dashboard. La Dashboard est accessible par les utilisateurs pour
+    visualiser les données et par les administrateurs pour configurer le système :
+    \includegraphics[width=440px]{Images/Contexte_CDC.png}
+
+    \subsection{Diagramme UML de cas d’utilisation :}
+    Le technicien informatique accède à l’interface de paramétrage du système après c’être authentifié.
+    Il peut paramétrer les alertes et le système de capteurs depuis cette interface.
+    L’utilisateur peut consulter les données après authentification et reçoit des alertes mail si un seuil
+    de QAI est dépassé.
+    Le microcontrôleur récupère les données des capteurs et les transmet au serveur de centralisation.
+
+    \subsection{Diagramme de séquence de visualisation des données :}
+    Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un
+    navigateur internet. L’URL sera convertie en adresse IP par le serveur DNS, puis le serveur
+    Authelia se chargera de l’authentification de l’utilisateur. Enfin, Node-Red va récupérer les données
+    dans la base de données MariaDB et les afficher sur le poste client
+    \includegraphics[width=440px]{Images/Sequence_visu.png}
+    \newpage
+
+    \subsection{Diagramme de séquence de réception / envoi des données :}
+    Le capteur de QAI transmet les données récoltées au microcontrôleur STM32 qui va ensuite les
+    chiffrer à l’aide de SSL/TLS puis les envoyer au broker MQTT. Le broker MQTT déchiffre les
+    données et les transmet aux clients qui ont souscrits au topic. Le script Python est un de ces clients
+    et il se charge de récupérer les données et de les écrire dans la base de données
+    \includegraphics[width=440px]{Images/Sequence_envoie.png}
+
+    \subsection{Diagramme de Merise :}
+    Chaque capteur est identifié par un numéro unique ainsi qu’un nom donné par l’administrateur.
+    Le capteur mesure plusieurs types de grandeurs physiques, spécifiées dans id type.
+    Chaque mesure est liée au capteur, au type de mesure et horodatée
+    \newpage
+    
+    \subsection{Diagramme de déploiement :}
+    Le système sera déployé en 4 parties distinctes :
+    Un ou plusieurs sous-ensembles capteurs + microcontrôleurs seront installés dans les usines.
+    Ils communiqueront avec le serveur GNU/Linux qui a un broker MQTT, un serveur Node-Red, une
+    base de données MariaDB, un serveur mail ainsi que divers services de sécurisation.
+    Ce serveur sera également utilisé par les PC clients des collaborateurs pour visualiser les données
+    ainsi que par les PC clients de l’IT pour visualiser les données et configurer le système. Tous ces
+    sous-ensembles communiqueront par le réseau.
+    \newline
+    \includegraphics[width=440px]{Images/Deploiement.png}
+
+    \newpage
+    \subsection{Contraintes techniques et économiques}
+    Le microcontrôleur devra être programmé en Rust ou en C.
+    La distribution Linux devra être Debian ou Arch Linux.
+    Les conteneurs doivent respecter la norme OCI.
+    Les conteneurs doivent être gérés avec Kubernetes.
+    La Dashboard sera faite avec Node-Red.
+    Un serveur DNS doit être fonctionnel pour permettre la résolution de l’url de la dashboard.
+    La connexion au serveur doit se faire via un protocole sécurisé.
+    Le serveur doit être sécurisé avec un pare-feu.
+    Les données doivent transiter via le protocole MQTT sécurisé avec SSL/TLS.
+    Le capteur doit être utilisable en environnement industriel (résistant à la poussière et à la chaleur).
+    Le système doit être sauvegardé pour permettre une restauration complète du système en cas de
+    panne ou de cyberattaque.
+    Le code doit être versionné avec l’outil git et documenté par le biais d’un wiki.
+    Achat Microcontrôleur DevBoard -> 30€
+    Achat Capteur -> 20€
+    \newpage
+    \section{Configuration}
+    \section{Conclusion}
+    
+    \begin{flushleft}
+        Texte de test
+    \end{flushleft}
 \end{document}
