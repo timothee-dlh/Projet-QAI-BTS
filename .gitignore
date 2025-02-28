@@ -2,4 +2,16 @@
 *.tar
 *.o
 *.old
-projet/build
+*.aux
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.png
+*.nav
+*.snm
+projet/build/
+eth/build/
+eth/esp-idf/
+tags
