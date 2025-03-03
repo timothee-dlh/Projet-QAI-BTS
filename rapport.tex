@@ -1,71 +1,47 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[a4paper,11pt]{article}
 \usepackage{graphicx}
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{xcolor} 
 \usepackage{tikz}    
 \usepackage[french,provide=*]{babel}
+\usepackage{array} % Inclure le package array
 \geometry{left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm} % Définir les marges
 
 \definecolor{companycolor}{RGB}{0,82,155}  
 
-\renewcommand{\maketitle}{
-    \begin{titlepage}
-        \pagecolor{white}
-        
-        %\vspace{3cm}
-        
-        \begin{center}
-            \color{companycolor}
-            {\Huge\bfseries Capteur de qualité d'air connecté\par}
-            \vspace{1.5cm}
-            
-            \rule{\linewidth}{0.5mm}
-            \vspace{1.5cm}
-
-            \begin{minipage}{0.4\textwidth}
-            \hspace{2.5cm}
-                \begin{center}
-                    {\Large\textbf{Apprenti}}\par
-                    \vspace{0.5cm}
-                    {\large Timothée Delhelle}\par
-                \end{center}
-            \end{minipage}
-            \hfill
-            \begin{minipage}{0.4\textwidth}
-            \hspace{2.5cm}
-                \begin{center}
-                    {\Large\textbf{Tuteur}}\par
-                    \vspace{0.5cm}
-                    {\large Nicolas Freyd}\par
-                \end{center}
-            \end{minipage}
-            
-            \vspace{1.5cm}
-            \begin{minipage}{0.4\textwidth}
-                \begin{center}
-                    {\Large\textbf{Entreprise:}}\par
-                    \vspace{0.3cm}
-                    {\Large{Hager Electro}}\par
-                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{Images/hager_logo.png}}%
-                \end{center}
-            \end{minipage}
-            \hfill
-            \begin{minipage}{0.4\textwidth}
-                \begin{center}
-                    {\Large\textbf{Centre de Formation:}}\par
-                    \vspace{0.3cm}
-                    {\Large{CFAI Eckbolsheim}}\par
-                    \makebox[0.4\textwidth]{\includegraphics[width=3cm]{Images/hager_logo.png}}%
-                \end{center}
-            \end{minipage}
-        \end{center}
-    \end{titlepage}
-}
 
 \date{}
 
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
 \begin{document}
-    \maketitle{}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=7cm]{Images/hager.png}\hfill
+    \includegraphics[width=7cm]{Images/uimm.jpg}\par\vspace{1cm} % Remplacez par le logo de votre entreprise
+    {\scshape\LARGE HagerGroup}\hspace{5cm}
+    {\scshape\LARGE UIMM Alsace\par}
+    \vspace{1cm}
+    {\scshape\Large Rapport de fin de projet d'études E6 \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Capteur de Qualité d'Air Intérieur(QAI) \par}
+    \vspace{2cm}
+    {\Large\itshape Apprenti :}
+    \vspace{0.5cm}
+    {\Large Timothée Delhelle \par}
+    {\Large\itshape Tuteur :}
+    \vspace{0.5cm}
+    {\Large Nicolas Freyd \par}
+    \vfill
+    {\Large Diplôme : \par}
+    \vspace{0.5cm}
+    {\Large BTS CIEL (Cybersécurité, Informatique et Réseaux, Electronique) \par}
+    \vfill
+    {\Large Promotion : \par}
+    \vspace{0.5cm}
+    {\Large 2023-2025 \par}
+\end{titlepage}
+
     \tableofcontents
     \newpage
 
@@ -83,8 +59,22 @@
 
     \section{Présentation de l'entreprise}
     \subsection{Localisation}
+    \includegraphics[width=440px]{Images/Localisations.png}
     \subsection{Secteur d'activité}
+    \includegraphics[width=440px]{Images/Marques.png}
+    \subsection{Produits phares}
+    \includegraphics[width=440px]{Images/Secteur.png}
     \subsection{Chiffres clés}
+    \includegraphics[width=440px]{Images/Chiffres.png}
+    \newpage
+    \subsection{Mes Missions}
+    \begin{itemize}
+        \item Sauvegarde du parc informatique des usines du site d'Obernai via la solution Veeam.
+        \item Cartographie du réseau à l'aide de l'outil XMind. La cartographie inclut les PC de production, les PLC (automates) ainsi que les périphériques IP tels que des caméras, imprimantes, IHM (Interface Homme Machine) etc.
+        \item Provisionning de nouveaux PC via PXE à l'aide d'un template disponible via Ivanti. Les nouveaux PC sont provisionnés automatiquement puis enrollés dans l'AD et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form.
+        \item Migration de PC depuis Windows 7 vers Windows 10. Les anciennes applications ainsi que leurs configurations sont transférées sur le nouveau PC si possible, sinon une mise à jour est faite vers un système plus récent. Le PC est ensuite testé et validé dans un environnement de test puis mis en production.
+        \item Formation des utilisateurs aux nouvelles technologies mises en place au sein de l'entreprise.
+    \end{itemize}
     \newpage
 
     \section{Cahier des charges}
@@ -103,6 +93,7 @@
     stocke et les affiche sur une Dashboard. La Dashboard est accessible par les utilisateurs pour
     visualiser les données et par les administrateurs pour configurer le système :
     \includegraphics[width=440px]{Images/Contexte_CDC.png}
+    \newpage
 
     \subsection{Diagramme UML de cas d’utilisation :}
     Le technicien informatique accède à l’interface de paramétrage du système après c’être authentifié.
@@ -110,6 +101,9 @@
     L’utilisateur peut consulter les données après authentification et reçoit des alertes mail si un seuil
     de QAI est dépassé.
     Le microcontrôleur récupère les données des capteurs et les transmet au serveur de centralisation.
+    \newline
+    \includegraphics[width=440px]{Images/Cas_utilisation.png}
+    \newpage
 
     \subsection{Diagramme de séquence de visualisation des données :}
     Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un
@@ -145,26 +139,73 @@
 
     \newpage
     \subsection{Contraintes techniques et économiques}
-    Le microcontrôleur devra être programmé en Rust ou en C.
-    La distribution Linux devra être Debian ou Arch Linux.
-    Les conteneurs doivent respecter la norme OCI.
-    Les conteneurs doivent être gérés avec Kubernetes.
-    La Dashboard sera faite avec Node-Red.
-    Un serveur DNS doit être fonctionnel pour permettre la résolution de l’url de la dashboard.
-    La connexion au serveur doit se faire via un protocole sécurisé.
-    Le serveur doit être sécurisé avec un pare-feu.
-    Les données doivent transiter via le protocole MQTT sécurisé avec SSL/TLS.
-    Le capteur doit être utilisable en environnement industriel (résistant à la poussière et à la chaleur).
-    Le système doit être sauvegardé pour permettre une restauration complète du système en cas de
-    panne ou de cyberattaque.
-    Le code doit être versionné avec l’outil git et documenté par le biais d’un wiki.
-    Achat Microcontrôleur DevBoard -> 30€
-    Achat Capteur -> 20€
+
+
+    \subsubsection{Contraintes Techniques}
+    Le microcontrôleur devra être programmé en Rust ou en C.\newline
+    La distribution Linux devra être Debian ou Arch Linux.\newline
+    Les conteneurs doivent respecter la norme OCI.\newline
+    Les conteneurs doivent être gérés avec Kubernetes.\newline
+    La Dashboard sera faite avec Node-Red.\newline
+    Un serveur DNS doit être fonctionnel pour permettre la résolution de l’url de la dashboard.\newline
+    La connexion au serveur doit se faire via un protocole sécurisé.\newline
+    Le serveur doit être sécurisé avec un pare-feu.\newline
+    Les données doivent transiter via le protocole MQTT sécurisé avec SSL/TLS.\newline
+    Le capteur doit être utilisable en environnement industriel (résistant à la poussière et à la chaleur).\newline
+    Le système doit être sauvegardé pour permettre une restauration complète du système en cas de panne ou de cyberattaque.\newline
+    Le code doit être versionné avec l’outil git et documenté par le biais d’un wiki.\newline
+
+    \subsubsection{Contraintes Economiques}
+    Achat Microcontrôleur DevBoard : 30€ \newline
+    Achat Capteur : 20€
+
+    \subsection{Ressources Utilisées}
+    \begin{tabular}{| C{5cm} | C{10cm} |}
+        \hline
+        Buildah & Création des conteneurs OCI \\
+        \hline
+        Podman  & Test des conteneurs OCI \\
+        \hline
+        Kubernetes  & Gestion des conteneurs OCI \\
+        \hline
+        Node-Red & Création de la dashboard \\
+        \hline
+        Authelia & Gestion des utilisateurs Node-Red \\
+        \hline
+        Bind 9 & Serveur DNS \\
+        \hline
+        SSH & Administration à distance sécurisée \\
+        \hline
+        SMTP & Envoi des mails d'alerte \\
+        \hline
+        UFW & Sécurisation réseau du serveur (pare-feux) \\
+        \hline
+        MQTT & Récupération / Envoie des données du capteur \\
+        \hline
+        STM32H753ZI / ESP32-Wroom32E & Traitement des données du capteur et envoie au serveur \\
+        \hline
+        C / Rust & Programmation du STM32 / ESP32 \\
+        \hline
+        PC Intel NUC & Serveur Linux \\
+        \hline
+        PMS5003 / SDS011 / MQ135 / ADA4632 & Capteur de QAI \\
+        \hline
+        MariaDB & Base de données \\
+        \hline
+        Debian / Arch / Alpine Linux / Ubuntu & Système d'exploitation \\
+        \hline
+        Timeshift / Veeam & Backup du système et des conteneurs OCI \\
+        \hline
+        Python3 / Rust & Script de récupération et d'envoie des données depuis MQTT vers MariaDB \\
+        \hline
+        Sphinx / RustDoc & Création du wiki documentant le code \\
+        \hline
+        Git + Github & Versionning du code \\
+        \hline
+    \end{tabular}
     \newpage
+    \section{Firmware}
     \section{Configuration}
     \section{Conclusion}
     
-    \begin{flushleft}
-        Texte de test
-    \end{flushleft}
 \end{document}
