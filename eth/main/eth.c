@@ -169,8 +169,8 @@ void app_main(void)
      */
     esp_mqtt_client_config_t mqtt_cfg = { 
         .broker.address.hostname = "192.168.1.1",
-        .broker.address.port = 1883,
-        .broker.address.transport = MQTT_TRANSPORT_OVER_TCP,
+        .broker.address.port = 9001,
+        .broker.address.transport = MQTT_TRANSPORT_OVER_WS,
         .session.keepalive = 120, // Increase keepalive interval
         .credentials.username = NULL,
         .credentials.authentication.password = NULL,
