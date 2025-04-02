@@ -2,7 +2,7 @@ CC=gcc
 
 SOURCE=main.c
 OUT=main.elf
-LIB=/usr/lib/libmosquitto.so
+LIB=libmosquitto.so
 OBJ=main.o
 
 all: main.elf
