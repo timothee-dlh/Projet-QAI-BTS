@@ -4,240 +4,357 @@
 \usepackage{xcolor} 
 \usepackage{tikz}    
 \usepackage[french,provide=*]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{array} % Inclure le package array
 \usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tocloft}
 \geometry{left=3cm, right=3cm, top=2.5cm, bottom=2.5cm} % Définir les marges
 
 \definecolor{companycolor}{RGB}{0,82,155}  
 
+\setlength{\cftbeforesecskip}{10pt}
+\setlength{\cftbeforesubsecskip}{5pt}
+\setlength{\cftbeforesubsubsecskip}{5pt}
 
 \date{}
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 
+\lstset{ % General setup for the package
+    language=vbscript,
+    basicstyle=\small\sffamily,
+    numbers=left,
+     numberstyle=\tiny,
+    frame=tb,
+    tabsize=4,
+    columns=fixed,
+    showstringspaces=false,
+    showtabs=false,
+    keepspaces,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue}
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {ô}{{\^o}}1
+}
+
 \begin{document}
-\begin{titlepage}
-    \centering
-    \includegraphics[width=7cm]{../Images/hager.png}\hfill
-    \includegraphics[width=7cm]{../Images/uimm.jpg}\par\vspace{1cm} % Remplacez par le logo de votre entreprise
-    {\scshape\LARGE HagerGroup}\hspace{5cm}
-    {\scshape\LARGE UIMM Alsace\par}
+    \begin{titlepage}
+        \centering
+        \includegraphics[width=7cm]{../Images/hager.png}\hfill
+        \includegraphics[width=7cm]{../Images/uimm.jpg}\par\vspace{1cm} % Remplacez par le logo de votre entreprise
+        {\scshape\LARGE HagerGroup}\hspace{4cm}
+        {\scshape\LARGE UIMM Alsace\par}
+        \vspace{2.5cm}
+        {\huge\bfseries Revue 1 : présentation d'entreprise \par}
+        \vspace{2cm}
+        {\Large\itshape Apprenti :}
+        \vspace{0.5cm}
+        {\Large Timothée Delhelle \par}
+        {\Large\itshape Tuteur :}
+        \vspace{0.5cm}
+        {\Large Nicolas Freyd \par}
+        \vfill
+        {\Large Diplôme : \par}
+        \vspace{0.5cm}
+        {\Large BTS CIEL (Cybersécurité, Informatique et Réseaux, Electronique) \par}
+        \vfill
+        {\Large Promotion : \par}
+        \vspace{0.5cm}
+        {\Large 2023-2025 \par}
+    \end{titlepage}
+
+    \begin{flushleft}
+    \vspace{5cm}
+    \Large{\textbf{Remerciements}}
+    \end{flushleft}
     \vspace{1cm}
-    {\scshape\Large Rapport de fin de projet d'études E6 \par}
-    \vspace{1.5cm}
-    {\huge\bfseries Capteur de Qualité d'Air Intérieur(QAI) \par}
-    \vspace{2cm}
-    {\Large\itshape Apprenti :}
-    \vspace{0.5cm}
-    {\Large Timothée Delhelle \par}
-    {\Large\itshape Tuteur :}
-    \vspace{0.5cm}
-    {\Large Nicolas Freyd \par}
-    \vfill
-    {\Large Diplôme : \par}
-    \vspace{0.5cm}
-    {\Large BTS CIEL (Cybersécurité, Informatique et Réseaux, Electronique) \par}
-    \vfill
-    {\Large Promotion : \par}
-    \vspace{0.5cm}
-    {\Large 2023-2025 \par}
-\end{titlepage}
+    Je remercie Nicolas Freyd, mon tuteur, ainsi que Christian Kuhn, mon supérieur pour m'avoir donné l'opportunité de réaliser mon BTS en alternance au sein de l'entreprise Hager.\newline \newline
+    Mes remerciements vont également à tous mes collèges qui, au travers de leur bienveillance, leur savoir-faire et leur disponibilité, ont fait en sorte que mon alternance se déroule dans les meilleures conditions.\newline \newline
+    Enfin, je remercie les enseignants du Pôle Formation UIMM Alsace pour leur enseignement de qualité.\newline
+    \newpage
 
     \tableofcontents
     \newpage
 
-    \section{Introduction}
-        Hager Electro est une filiale de Hager Group fabriquant principalement des disjoncteurs au sein de
-    plusieurs usines situées majoritairement en Alsace et en Allemagne.
-    Actuellement la qualité de l’air des usines n’est pas analysée, ce qui peut représenter un risque
-    pour la santé des personnes due à de potentielles particules fines.
-    Pour cela, il s’agit d’utiliser un microcontrôleur récupérant les données de capteurs de particules
-    fines puis les envoyant à un serveur permettant le traitement, la visualisation et le stockage de ses
-    données.
-    Actuellement, des serveurs sont en places mais n’ont pas les logiciels requis et aucuns capteurs
-    ne sont présents au sein des usines.
-    \newpage
-
     \section{Présentation de l'entreprise}
-    \subsection{Localisation}
-    \includegraphics[width=420px]{../Images/Localisations.png}
-    \subsection{Secteur d'activité}
-    \includegraphics[width=420px]{../Images/Marques.png}
-    \subsection{Produits phares}
-    \includegraphics[width=420px]{../Images/Secteur.png}
-    \subsection{Chiffres clés}
-    \includegraphics[width=420px]{../Images/Chiffres.png}
+    \vspace{0.3cm}
+    \subsection{Histoire de l'entreprise}
+    En 1955, Oswald Hager et Hermann Hager (1928-2014)créent avec leur père Peter Hager l’entreprise Hager oHG, elektrotechnische Fabrik, à Ensheim (Allemagne). À cette époque et depuis 1945, la Sarre est économiquement rattachée à la France et le marché allemand n'est pas accessible. Hager souhaite néanmoins s'implanter sur ces deux marchés.\newline
+    \vspace{0.5cm}
+    \newline
+    En 1959, la famille Hager crée à Obernai, en Alsace, l’entreprise Hager Electro SA qui est la première filiale étrangère. À partir de 1966, Hager forme des installateurs électriciens de manière systématique ce qui instaure une culture de fidélisation des clients en leur fournissant des informations utiles. Le disjoncteur modulaire de Hager est breveté en Allemagne en 1968 puis en France en 1970. Dans le même temps, le premier tableau électrique en série, le « Hager-Rapid-System », fait son apparition sur le marché français. En 1973, Hager réalise un chiffre d'affaires de 43 millions de deutsche marks en Allemagne, et, en 1974, de 22 millions de francs en France.
+    \vspace{0.5cm}
+    \newline
+    En 1976, Hager introduit sur le marché le petit coffret de distribution Gamma. Puis, en 1982, débute la production de disjoncteurs différentiels. Un nouveau site de production avec un entrepôt à hauts rayonnages est également créé à Blieskastel. Dans les années 1980, le groupe Hager commence à se positionner comme un fournisseur de services complets pour les installations électriques dans les bâtiments. Des sociétés de distribution sont créées en Europe (Suisse, Grande-Bretagne). Depuis le milieu des années 1990, le groupe Hager a développé son réseau de distribution aux Émirats arabes unis (Dubaï), à Singapour, en Malaisie, à Hong Kong, en Chine, en Australie et en Nouvelle-Zélande.
+    \vspace{0.5cm}
+    \newline
+    Par la suite, de nombreuses acquisitions d'entreprises par HagerGroup permettent une diversification des activitées et assurent ainsi la prospérité du groupe. 
+    \vspace{2cm}
+    \newline
+    \includegraphics[width=220px]{../Images/obernai_ancien.png}
+    \hspace{1cm}
+    \includegraphics[width=220px]{../Images/construction_obernai.png}
+    \textit{Inauguration du site d'Obernai}
+    \hspace{3.35cm}
+    \textit{Agrandissement du site d'Obernai}
     \newpage
-    \subsection{Mes Missions}
+    % TODO: Histoire de l'entreprise
+    \subsection{Localisation}
+    \vspace{0.3cm}
+    \subsubsection{Global}
+    \vspace{0.5cm}
+    Hager Group est une entreprise internationale avec des sites de production présents en Europe et en Asie et une distribution des produits dans plus de 100 pays différents.
+    \vspace{0.1cm}
+    \newline
+    \includegraphics[width=420px]{../Images/Localisations.png}
+    \newline
+    \textit{Figure 1 : localisations des sites de production HagerGroup dans le monde}
+    \subsubsection{Site principale}
+    \includegraphics[width=420px]{../Images/maps_hager.png}
+    \newline
+    \textit{Figure 2 : localisation du plus gros site Hager à Obernai}
+    \subsection{Secteurs d'activité}
+    \vspace{0.5cm}
+    \includegraphics[width=420px]{../Images/Marques.png}
+    \newline
+    \textit{Figure 3 : les différentes marques HagerGroup}
+    \newline
+    \subsection{Produits phares}
+    \vspace{0.5cm}
+    \includegraphics[width=420px]{../Images/Secteur.png}
+    \newline
+    \textit{Figure 4 : produits phares de HagerGroup}
+    \vspace{0.3cm}
+    \newline
     \begin{itemize}
-        \item Sauvegarde du parc informatique des usines du site d'Obernai à l'aide de la solution Veeam.
-        \newline \newline
-        \includegraphics[width=420px]{../Images/veeam_backup.png}
-        \item Cartographie du réseau à l'aide de l'outil XMind. La cartographie inclut les PC de production, les PLC (automates) ainsi que les périphériques IP tels que des caméras, imprimantes, IHM (Interface Homme Machine) etc.
-        \newline 
-        \includegraphics[width=420px]{../Images/cartographie.png}
-        \newpage
-        \item Provisionning de nouveaux PC via PXE à l'aide d'un template disponible via Ivanti. Les nouveaux PC sont provisionnés automatiquement puis enrollés dans l'AD et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form.
-        \newline
-        \includegraphics[width=420px]{../Images/provisionning.png}
-        \item Migration de PC depuis Windows 7 vers Windows 10. Les anciennes applications ainsi que leurs configurations sont transférées sur le nouveau PC si possible, sinon une mise à jour est faite vers un applicatif plus récent. Le PC est ensuite testé et validé dans un environnement de test puis mis en production.
-        \newline
-        \includegraphics[width=420px]{../Images/migration.png}
-        \item Formation des utilisateurs aux nouvelles technologies mises en place au sein de l'entreprise.
+        \item Disjoncteur magnéto-thermique : disjoncteur protégeant contre les courts-circuits (magnéto) et contre les surcharges (thermique).
+        \item Interrupteur différentiel : protège les personnes en détectant une fuite de courant à la terre.
+        \item Borne de recharge : permet la recharge rapide de véhicules électriques.
+        \item Tableau de distribution : tableau hébergeant les différents éléments constituant une installation éléctrique (ex: disjoncteurs, interrupteurs différentiels...).
+    \end{itemize}
+    \subsection{Chiffres clés}
+    \vspace{0.5cm}
+    Hager Group est une entreprise de grande envergure avec plus de 13000 collaborateurs, un chiffre d'affaire de plus de 3 milliards d'euros et 22 sites de production répartis en Europe et en Asie.
+    \vspace{2cm}
+    \newline
+    \includegraphics[width=420px]{../Images/Chiffres.png}
+    \vspace{0.2cm}
+    \newline
+    \textit{Figure 5 : Chiffres clés de l'année 2023}
+    \vspace{1.1cm}
+    \begin{itemize}
+        \item Chiffre d'affaire : chiffre d'affaire total du groupe (Europe, Asie, USA).
+        \item Collaborateurs : différents services au sein de HagerGroup (RH, vente, informatique, maintenance...).
+        \item Principaux sites de production : Obernai, Blieskastel, Bieruń.
     \end{itemize}
     \newpage
+    \subsection{Organisation des services informatiques}
+    \vspace{0.5cm}
+    Le service informatique (SI) au sein de HagerGroup se divise en quatre grands groupes (cf. Figure 6) :
+    \begin{enumerate}
+        \item une équipe en charge de l'administration des réseaux industriels (IIT\footnote{Industrial Information Technology, synonyme : OT}),
+        \item une équipe en charge du développement d'applications pour le groupe,
+        \item une équipe en charge de l'administration des réseaux bureautique,
+        \item les relais IIT en charge de la maintenance des équipements informatiques industriels.
+    \end{enumerate}
+    \includegraphics[width=420px]{../Images/orga_iit.png}
+    \newline
+    \textit{Figure 6 : schéma de l'organisation du SI\footnote{Service Informatique}}
+    \vspace{0.5cm}
+    \newpage
+    \subsection{Présentation de l'équipe}
+    \vspace{0.5cm}
+    Les relais IIT sont l'interface entre l'équipe IIT (Industrial Information Technology) et la production. 
+    Ils sont en charge de la maintenance des équipements informatiques présents au sein des usines et sont donc obligés de travailler avec des automaticiens, des techniciens de maintenance, avec l'équipe en charge des serveurs ainsi qu'avec les développeurs.
+    \newline \newline
+    Ci-dessous une liste non exaustive des personnes avec qui l'apprenti travaille :
+    \newline \newline
 
-    \section{Cahier des charges}
-        L’objectif de ce projet est de pouvoir mesurer la qualité de l’air des usines ainsi que d’envoyer des
-    alertes si des seuils sont dépassés.
-    Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer
-    les données. Il va ensuite les chiffrer via SSL et les envoyer au broker MQTT hébergé sur le
-    serveur Linux.
-    Le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les
-    afficher sur une Dashboard et envoyer des alertes si besoin.
-
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+    \renewcommand{\arraystretch}{1.5} % Augmenter l'espace vertical entre les lignes
     
-    \subsection{Diagramme de contexte :}
-    Le capteur de QAI effectue des mesures à intervalle régulier, ces mesures sont transmises au
-    microcontrôleur STM32 qui les transmet à son tour au serveur. Le serveur traite les données, les
-    stocke et les affiche sur une Dashboard. La Dashboard est accessible par les utilisateurs pour
-    visualiser les données et par les administrateurs pour configurer le système :
-    \includegraphics[width=420px]{../Images/Contexte_CDC.png}
-    \newpage
+    {
+    \centering{
+    \begin{tabular}{|>{\raggedright\arraybackslash}C{3cm}|>{\raggedright\arraybackslash}C{4cm}|>{\raggedright\arraybackslash}C{8cm}@{\hspace{10pt}}|}
+        \hline
+        \textbf{Nom} & \textbf{Rôle} & \textbf{Description} \\
+        \hline
+        Nicolas & Relais IIT & Nicolas est en charge de la maintenance des PC de production du site d'Obernai. Il s'assure d'appliquer les politiques de cybersécurité, les sauvegardes et il cartographie le réseau.\\
+        \hline
+        Estelle & Automaticienne & Estelle est en charge des automates de l'usine 2 du site d'Obernai et maintient également le parc informatique de cette usine.\\
+        \hline
+        Quentin & Ingénieur Système et Réseau & Quentin est charge des serveurs Veeam ainsi que de l'architecture et de la mise en place de nouvelles infrastructures réseaux. \\
+        \hline
+        Sacha & Ingénieur Système & Sacha gère la connectivité machine de toutes les usines HagerGroup.\\
+        \hline
+        Patrick & Technicien de maintenance & Patrick gère la maintenance de plusieurs lignes de production et maintient également le parc informatique. \\
+        \hline
+        Thomas & Chef de la maintenance & Thomas est le chef de la maintenance de l'usine 1 et aide au maintien du matériel informatique de l'usine dont il est en charge.\\
+        \hline
 
-    \subsection{Diagramme UML de cas d’utilisation :}
-    Le technicien informatique accède à l’interface de paramétrage du système après c’être authentifié.
-    Il peut paramétrer les alertes et le système de capteurs depuis cette interface.
-    L’utilisateur peut consulter les données après authentification et reçoit des alertes mail si un seuil
-    de QAI est dépassé.
-    Le microcontrôleur récupère les données des capteurs et les transmet au serveur de centralisation.
-    \newline
-    \includegraphics[width=420px]{../Images/Cas_utilisation.png}
-    \newpage
+    \end{tabular}}
+   }
 
-    \subsection{Diagramme de séquence de visualisation des données :}
-    Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un
-    navigateur internet. L’URL sera convertie en adresse IP par le serveur DNS, puis le serveur
-    Authelia se chargera de l’authentification de l’utilisateur. Enfin, Node-Red va récupérer les données
-    dans la base de données MariaDB et les afficher sur le poste client
-    \includegraphics[width=420px]{../Images/Sequence_visu.png}
     \newpage
+    \section{Les missions de l'apprenti}
+    \vspace{0.5cm}
+        \subsection{Sauvegarde du parc informatique}
+        \vspace{0.3cm}
+        Le parc informatique industriel comprenant tous les PC servant à la production dans les usines est sauvegardé via la solution Veeam (cf. Figure 8). Les sauvegardes sont hebdomadaires et incrémentales. Elles sont stockées sur un serveur (cf. Figure 7) pour une durée de 3 mois et permettent une restauration complète du système ainsi que la restauration de fichiers individuels.
+        \vspace{1cm}
+        \newline 
+        \textbf{Infrastructure Veeam}
+        \newline \newline
+        \includegraphics[width=400px]{../Images/infra_veeam.png}
+        \newline
+        \textit{Figure 7 : schéma de l'infrastrucure Veeam}
+        \newpage 
+        \textbf{Agent Veeam}
+        \vspace{0.8cm}
+        \newline \newline
+        \includegraphics[width=400px]{../Images/veeam_backup.png}
+        \newline
+        \textit{Figure 8 : Historique des sauvegardes d'un PC réalisées par l'agent Veeam }
+        \vspace{0.8cm}
+        \newline
+        Cette sauvegarde hebdomadaire est incrémentale, sur ce diagramme une sauvegarde sur deux est incrémentale.
+        \newpage
+        \subsection{Cartographie du réseau industriel}
+        \vspace{0.5cm}
+        La cartographie inclut les PC de production, les PLC\footnote{Programmable Logic Controller} ainsi que les périphériques IP\footnote{Internet Protocol} tels que des caméras, imprimantes, IHM\footnote{Interface Homme Machine}... (cf. Figure 9).
+        Cette cartographie est utilisée pour sécuriser le parc informatique et permet également de définir un niveau de criticité pour chaque poste (BCP\footnote{Business Continuity Plan
+        {
+        \footnotesize
+    \begin{itemize}
+    \item BCP\_P1 : arrêt de la production en cas d'arrêt du PC
+    \item BCP\_P2 : fonctionnement en marche dégradée en cas d'arrêt du PC
+    \item BCP\_P3 : aucun impact sur la production en cas d'arrêt du PC
+    \end{itemize}}} code). Ce code permet de déterminer l'impact de l'arrêt d'un PC sur la production, qu'il soit dû à une panne ou une cyberattaque.
+        \vspace{0.5cm}
+        \newline
+        \includegraphics[width=420px]{../Images/cartographie.png}
+        \vspace{0.4cm}
+        \newline
+        \textit{Figure 9 : Cartographie du réseau XMind}
+        \newline \newline \newline
+        \includegraphics[width=200px]{../Images/pc1.png}
+        \hspace{2cm}
+        \includegraphics[width=200px]{../Images/pc3.png}
+        \textit{Figure 10: PC extrait de la cartographie}
+        \hspace{2.4cm}
+        \textit{Figure 11: PC extrait de la \mbox{cartographie}}
+        \newpage
+        \subsection{Provisioning de postes}
+        \vspace{0.5cm}
+        Les nouveaux PC sont provisionnés par PXE\footnote{Preboot Execution Environment}, enrollés dans l'AD\footnote{Active Directory} à l'aide du compte intune et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form (cf. Figure 12).
+        \vspace{0.5cm}
+        \newline
+        \includegraphics[width=420px]{../Images/provisionning.png}
+        \newline
+        \textit{Figure 12 : Provisioning de nouveaux PC via PXE et Ivanti.}
+        \vspace{0.3cm}
+        \subsection{Migration de PC de production}
+        \vspace{0.5cm}
+        Les anciennes applications ainsi que leurs configurations sont transférées sur le nouveau PC si possible, sinon une mise à jour est faite vers un applicatif plus récent. Le PC est ensuite testé et validé dans un environnement de test puis mis en production.
+        \vspace{0.3cm}
+        \newline
+        \includegraphics[width=420px]{../Images/migration.png}
+        \newline
+        \textit{Figure 13 : Migration de PC depuis Windows 7 vers Windows 10.}
+        \newpage
 
-    \subsection{Diagramme de séquence de réception / envoi des données :}
-    Le capteur de QAI transmet les données récoltées au microcontrôleur STM32 qui va ensuite les
-    chiffrer à l’aide de SSL/TLS puis les envoyer au broker MQTT. Le broker MQTT déchiffre les
-    données et les transmet aux clients qui ont souscrits au topic. Le script Python est un de ces clients
-    et il se charge de récupérer les données et de les écrire dans la base de données
-    \newline
-    \includegraphics[width=420px]{../Images/Sequence_envoie.png}
+        \subsection{Ecriture de scripts}
+        \subsubsection{Script de purge de fichiers :}
+\begin{lstlisting}
+' Fichier de configuration de l'application
+ConfigFile := "config.ini"
 
-    \subsection{Diagramme de Merise :}
-    Chaque capteur est identifié par un numéro unique ainsi qu’un nom donné par l’administrateur.
-    Le capteur mesure plusieurs types de grandeurs physiques, spécifiées dans id type.
-    Chaque mesure est liée au capteur, au type de mesure et horodatée
-    \newline
-    \includegraphics[width=420px]{../Images/merise.png}
-    \newpage
+'Lecture des paramètres depuis le fichier de configuration
+Drive := IniRead(ConfigFile, "Settings", "Drive", "")
+
+Output_file := IniRead(ConfigFile, "Settings", "LogFile", "C:\tmp\log.txt")
+
+Dir_Path := IniRead(ConfigFile, "Settings", "FolderPath", "")
+FileDeleteDate := IniRead(ConfigFile, "Settings", "FileRemoveTime", "180")
+DiskTreshold := IniRead(ConfigFile, "Settings", "DiskTreshold", "80")
+TresholdDate := IniRead(ConfigFile, "Settings", "TresholdFileTime", "180")
+
+FileDeleteDate := -FileDeleteDate
+TresholdDate := -TresholdDate
+
+' Convertit le temps en ms
+Wait := IniRead(ConfigFile, "Settings", "WaitTime", "5") * 60 * 60 * 1000 
+
+Loop {
+    ' Récupère la date actuelle
+    Current_Date := A_Now
+
+    ' Obtient l'espace libre en octets.
+    FreeSpace := Round(DriveGetSpaceFree(Drive) / 1000, 2)  
+    Capacity := Round(DriveGetCapacity(Drive)/ 1000, 2)
+    Percentage := Round(FreeSpace * 100 / Capacity)
     
-    \subsection{Diagramme de déploiement :}
-    Le système sera déployé en 4 parties distinctes :
-    Un ou plusieurs sous-ensembles capteurs + microcontrôleurs seront installés dans les usines.
-    Ils communiqueront avec le serveur GNU/Linux qui a un broker MQTT, un serveur Node-Red, une
-    base de données MariaDB, un serveur mail ainsi que divers services de sécurisation.
-    Ce serveur sera également utilisé par les PC clients des collaborateurs pour visualiser les données
-    ainsi que par les PC clients de l’IT pour visualiser les données et configurer le système. Tous ces
-    sous-ensembles communiqueront par le réseau.
-    \newline
-    \includegraphics[width=420px]{../Images/Deploiement.png}
+    ' Permet de changer l'ancienneté des fichiers à supprimer 
+    ' si le disque dépasse un seuil de remplissage.
+    if (Percentage > DiskTreshold){
+        Date_new := DateAdd(Current_Date, TresholdDate, "Days")
+    } else {
+        Date_new := DateAdd(Current_Date, FileDeleteDate, "Days")
+    }
+    
+    ' Boucle qui itère sur tous les fichiers du disque 
+    Loop Files Dir_Path "\*.*", "FR"
+    {
+        FileName := A_LoopFileName
+        FilePath := A_LoopFilePath
+        Time := A_LoopFileTimeModified
+        if ( Time < Date_new ) {
+            FileDelete FilePath
+            Line := FilePath " removed at " ;
+            FormatTime(Current_Date, "yyyy-MM-dd H:mm") "`n"
 
-    \newpage
-    \subsection{Contraintes techniques et économiques}
+            FileAppend(Line, Output_file)
+        }
+    }
+    Sleep(Wait)
+}
+\end{lstlisting}
 
+        \newpage
+        \subsection{Formation des utilisateurs}
+        \vspace{0.5cm}
+        Formation des utilisateurs aux technologies mises en place au sein de l'entreprise :
+        \begin{itemize}
+            \item utilisation de la console Ivanti pour la gestion du parc informatique,
+            \item configuration des sauvegardes Veeam,
+            \item utilisation du serveur SFTP pour le transfert sécurisé de fichiers par le réseau.
+        \end{itemize}
+        \vspace{0.5cm}
+        \subsection{Projet E6}
+        \vspace{0.5cm}
+        Le projet de fin d'études E6 est réalisé en 200 heures au sein de l'entreprise (50h de gestion de projet + 150h de mise en place).
+        Ce projet permet de mettre en application des compétences clefs acquises durant les périodes de formation telles que :
+        \begin{itemize}
+            \item conteneurisation de services par le biais de conteneurs OCI,
+            \item gestion des conteneurs via Kubernetes,
+            \item création de pages web à l'aide de Node Red,
+            \item mise en place et gestion d'une base de données MariaDB,
+            \item programmation embarquée (microcontrôleur ESP32) + programmation système (script de récupération de données),
+            \item versionning à l'aide de Git + Github,
+            \item gestion des accès (Authelia),
+            \item sécurisation réseau (UFW).
+        \end{itemize}
+        \newpage
+        \section{Conclusion}
+        Travailler au sein d'une structure aussi importante et diversifiée que Hager Group m'a offert une expérience enrichissante et formatrice. J'ai eu l'opportunité d'explorer et de mettre en pratique des compétences variées, allant de la gestion du parc informatique à la communication entre les PC de production et les automates. Cette expérience m'a permis de comprendre l'importance de l'intégration entre les technologies de l'information (IT) et les technologies opérationnelles (OT), élément indispensable au bon fonctionnement d'une entreprise industrielle.\newline
 
-    \subsubsection{Contraintes Techniques}
-    Le microcontrôleur devra être programmé en Rust ou en C.\newline
-    La distribution Linux devra être Debian ou Arch Linux.\newline
-    Les conteneurs doivent respecter la norme OCI.\newline
-    Les conteneurs doivent être gérés avec Kubernetes.\newline
-    La Dashboard sera faite avec Node-Red.\newline
-    Un serveur DNS doit être fonctionnel pour permettre la résolution de l’url de la dashboard.\newline
-    La connexion au serveur doit se faire via un protocole sécurisé.\newline
-    Le serveur doit être sécurisé avec un pare-feu.\newline
-    Les données doivent transiter via le protocole MQTT sécurisé avec SSL/TLS.\newline
-    Le capteur doit être utilisable en environnement industriel (résistant à la poussière et à la chaleur).\newline
-    Le système doit être sauvegardé pour permettre une restauration complète du système en cas de panne ou de cyberattaque.\newline
-    Le code doit être versionné avec l’outil git et documenté par le biais d’un wiki.\newline
+L'apprentissage en milieu industriel m'a inculqué la rigueur et la précision nécessaires pour maintenir une haute disponibilité des services informatiques, essentielle pour soutenir les opérations de production. J'ai appris à travailler de manière méthodique et à anticiper les besoins et les défis potentiels, tout en assurant la sécurité et l'efficacité des systèmes.\newline
 
-    \subsubsection{Contraintes Economiques}
-    Achat Microcontrôleur DevBoard : 30€ \newline
-    Achat Capteur : 20€
+L'aboutissement de cette expérience, à travers le projet E6, m'a permis de synthétiser et d'appliquer les compétences acquises tout au long de ma formation. Ce projet m'a donné l'occasion de me familiariser avec des technologies avancées telles que la conteneurisation, la gestion de conteneurs avec Kubernetes, la création de pages web avec Node Red, et la gestion de bases de données. De plus, j'ai pu explorer la programmation embarquée avec des microcontrôleurs ESP32 et le versioning avec Git et GitHub, tout en renforçant mes compétences en sécurité réseau.\newline
 
-    \subsection{Ressources Utilisées}
-    \begin{tabular}{| C{30px} | C{5cm} | C{8cm} |}
-        \hline
-        \includegraphics[width=30px]{../Images/buildah.png} & Buildah & Création des conteneurs OCI \\
-        \hline
-        \includegraphics[width=30px]{../Images/podman.png} & Podman  & Test des conteneurs OCI \\
-        \hline
-        \includegraphics[width=30px]{../Images/kubernetes.png} & Kubernetes  & Gestion des conteneurs OCI \\
-        \hline
-        \includegraphics[width=30px]{../Images/node-red.png} & Node-Red & Création de la dashboard \\
-        \hline
-        \includegraphics[width=30px]{../Images/authelia.png} & Authelia & Gestion des utilisateurs Node-Red \\
-        \hline
-        \includegraphics[width=30px]{../Images/bind.png} & Bind 9 & Serveur DNS \\
-        \hline
-        \includegraphics[width=30px]{../Images/ssh.png} & SSH & Administration à distance sécurisée \\
-        \hline
-        \includegraphics[width=30px]{../Images/postfix.png} & PostFix & Serveur SMTP pour l'envoi des mails d'alerte \\
-        \hline
-        \includegraphics[width=30px]{../Images/ufw.png} & UFW & Sécurisation réseau du serveur (pare-feux) \\
-        \hline
-        \includegraphics[width=30px]{../Images/mqtt_logo.png} & MQTT & Récupération / Envoie des données du capteur \\
-        \hline
-        \includegraphics[width=30px]{../Images/espressif.png} & STM32H753ZI / ESP32-Wroom32E & Traitement des données du capteur et envoie au serveur \\
-        \hline
-        \includegraphics[width=30px]{../Images/rust.png} & C / Rust & Programmation du STM32 / ESP32 \\
-        \hline
-        \includegraphics[width=30px]{../Images/nuc.jpg} & PC Intel NUC & Serveur Linux \\
-        \hline
-        \includegraphics[width=30px]{../Images/sds011.jpg} & PMS5003 / SDS011 / MQ135 / ADA4632 & Capteur de QAI \\
-        \hline
-        \includegraphics[width=30px]{../Images/mariadb.png} & MariaDB & Base de données \\
-        \hline
-        \includegraphics[width=30px]{../Images/debian.png} & Debian / Arch / Alpine Linux / Ubuntu & Système d'exploitation \\
-        \hline
-        \includegraphics[width=30px]{../Images/veeam.png} & Timeshift / Veeam & Backup du système et des conteneurs OCI \\
-        \hline
-        \includegraphics[width=30px]{../Images/python.png} & Python3 / Rust & Script de récupération et d'envoie des données depuis MQTT vers MariaDB \\
-        \hline
-        \includegraphics[width=30px]{../Images/sphinx.png} & Sphinx / RustDoc & Création du wiki documentant le code \\
-        \hline
-        \includegraphics[width=30px]{../Images/git.png} & Git + Github & Versionning du code \\
-        \hline
-    \end{tabular}
-    \newpage
-    \section{Firmware}
-    \section{Configuration}
-    \section{Conclusion}
-    \section{Annexe}
-    Documentations liées au système
-    \subsection{Mosquitto}
-    \includegraphics[width=60px]{../Images/mqtt_logo.png}
-    \newline
-    \href{https://mosquitto.org/documentation/}{Documentation MQTT}
-    \newline
-    Schéma de fonctionnement du protocol MQTT :
-    \newline
-    \includegraphics[width=420px]{../Images/MQTT.png}
-    \subsection{MariaDB}
-    \includegraphics[width=60px]{../Images/mariadb.png}
-    \newline
-    \href{https://mariadb.org/documentation/}{Documentation MariaDB}
-    \subsection{ESP32}
-    \subsection{Debian}
-    \includegraphics[width=60px]{../Images/debian.png}
-    \newline
-    \href{https://www.debian.org/doc/}{Documentation Debian}
-
+Cette expérience chez Hager Group s'est avérée extrêmement bénéfique, me permettant de développer des compétences techniques solides tout en acquérant une compréhension approfondie des exigences et des dynamiques d'un environnement industriel. Je suis convaincu que ces acquis seront précieux pour mon avenir professionnel et me permettront de contribuer efficacement à des projets complexes et innovants.
 \end{document}
