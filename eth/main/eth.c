@@ -188,7 +188,7 @@ void app_main(void)
 
     while(1){
         if(CONNECTED == 1){
-            esp_mqtt_client_publish(mqtt_handle, "test", "1234 from esp32", 0, 0, 0);
+            esp_mqtt_client_publish(mqtt_handle, "test", "123", 0, 0, 0);
             vTaskDelay(pdMS_TO_TICKS(1000));
         } else {
             ESP_LOGI("MQTT :", "MQTT not connected");

@@ -1,0 +1,243 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{graphicx}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{xcolor} 
+\usepackage{tikz}    
+\usepackage[french,provide=*]{babel}
+\usepackage{array} % Inclure le package array
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\geometry{left=3cm, right=3cm, top=2.5cm, bottom=2.5cm} % Définir les marges
+
+\definecolor{companycolor}{RGB}{0,82,155}  
+
+
+\date{}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=7cm]{../Images/hager.png}\hfill
+    \includegraphics[width=7cm]{../Images/uimm.jpg}\par\vspace{1cm} % Remplacez par le logo de votre entreprise
+    {\scshape\LARGE HagerGroup}\hspace{5cm}
+    {\scshape\LARGE UIMM Alsace\par}
+    \vspace{1cm}
+    {\scshape\Large Rapport de fin de projet d'études E6 \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Capteur de Qualité d'Air Intérieur(QAI) \par}
+    \vspace{2cm}
+    {\Large\itshape Apprenti :}
+    \vspace{0.5cm}
+    {\Large Timothée Delhelle \par}
+    {\Large\itshape Tuteur :}
+    \vspace{0.5cm}
+    {\Large Nicolas Freyd \par}
+    \vfill
+    {\Large Diplôme : \par}
+    \vspace{0.5cm}
+    {\Large BTS CIEL (Cybersécurité, Informatique et Réseaux, Electronique) \par}
+    \vfill
+    {\Large Promotion : \par}
+    \vspace{0.5cm}
+    {\Large 2023-2025 \par}
+\end{titlepage}
+
+    \tableofcontents
+    \newpage
+
+    \section{Introduction}
+        Hager Electro est une filiale de Hager Group fabriquant principalement des disjoncteurs au sein de
+    plusieurs usines situées majoritairement en Alsace et en Allemagne.
+    Actuellement la qualité de l’air des usines n’est pas analysée, ce qui peut représenter un risque
+    pour la santé des personnes due à de potentielles particules fines.
+    Pour cela, il s’agit d’utiliser un microcontrôleur récupérant les données de capteurs de particules
+    fines puis les envoyant à un serveur permettant le traitement, la visualisation et le stockage de ses
+    données.
+    Actuellement, des serveurs sont en places mais n’ont pas les logiciels requis et aucuns capteurs
+    ne sont présents au sein des usines.
+    \newpage
+
+    \section{Présentation de l'entreprise}
+    \subsection{Localisation}
+    \includegraphics[width=420px]{../Images/Localisations.png}
+    \subsection{Secteur d'activité}
+    \includegraphics[width=420px]{../Images/Marques.png}
+    \subsection{Produits phares}
+    \includegraphics[width=420px]{../Images/Secteur.png}
+    \subsection{Chiffres clés}
+    \includegraphics[width=420px]{../Images/Chiffres.png}
+    \newpage
+    \subsection{Mes Missions}
+    \begin{itemize}
+        \item Sauvegarde du parc informatique des usines du site d'Obernai à l'aide de la solution Veeam.
+        \newline \newline
+        \includegraphics[width=420px]{../Images/veeam_backup.png}
+        \item Cartographie du réseau à l'aide de l'outil XMind. La cartographie inclut les PC de production, les PLC (automates) ainsi que les périphériques IP tels que des caméras, imprimantes, IHM (Interface Homme Machine) etc.
+        \newline 
+        \includegraphics[width=420px]{../Images/cartographie.png}
+        \newpage
+        \item Provisionning de nouveaux PC via PXE à l'aide d'un template disponible via Ivanti. Les nouveaux PC sont provisionnés automatiquement puis enrollés dans l'AD et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form.
+        \newline
+        \includegraphics[width=420px]{../Images/provisionning.png}
+        \item Migration de PC depuis Windows 7 vers Windows 10. Les anciennes applications ainsi que leurs configurations sont transférées sur le nouveau PC si possible, sinon une mise à jour est faite vers un applicatif plus récent. Le PC est ensuite testé et validé dans un environnement de test puis mis en production.
+        \newline
+        \includegraphics[width=420px]{../Images/migration.png}
+        \item Formation des utilisateurs aux nouvelles technologies mises en place au sein de l'entreprise.
+    \end{itemize}
+    \newpage
+
+    \section{Cahier des charges}
+        L’objectif de ce projet est de pouvoir mesurer la qualité de l’air des usines ainsi que d’envoyer des
+    alertes si des seuils sont dépassés.
+    Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer
+    les données. Il va ensuite les chiffrer via SSL et les envoyer au broker MQTT hébergé sur le
+    serveur Linux.
+    Le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les
+    afficher sur une Dashboard et envoyer des alertes si besoin.
+
+    
+    \subsection{Diagramme de contexte :}
+    Le capteur de QAI effectue des mesures à intervalle régulier, ces mesures sont transmises au
+    microcontrôleur STM32 qui les transmet à son tour au serveur. Le serveur traite les données, les
+    stocke et les affiche sur une Dashboard. La Dashboard est accessible par les utilisateurs pour
+    visualiser les données et par les administrateurs pour configurer le système :
+    \includegraphics[width=420px]{../Images/Contexte_CDC.png}
+    \newpage
+
+    \subsection{Diagramme UML de cas d’utilisation :}
+    Le technicien informatique accède à l’interface de paramétrage du système après c’être authentifié.
+    Il peut paramétrer les alertes et le système de capteurs depuis cette interface.
+    L’utilisateur peut consulter les données après authentification et reçoit des alertes mail si un seuil
+    de QAI est dépassé.
+    Le microcontrôleur récupère les données des capteurs et les transmet au serveur de centralisation.
+    \newline
+    \includegraphics[width=420px]{../Images/Cas_utilisation.png}
+    \newpage
+
+    \subsection{Diagramme de séquence de visualisation des données :}
+    Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un
+    navigateur internet. L’URL sera convertie en adresse IP par le serveur DNS, puis le serveur
+    Authelia se chargera de l’authentification de l’utilisateur. Enfin, Node-Red va récupérer les données
+    dans la base de données MariaDB et les afficher sur le poste client
+    \includegraphics[width=420px]{../Images/Sequence_visu.png}
+    \newpage
+
+    \subsection{Diagramme de séquence de réception / envoi des données :}
+    Le capteur de QAI transmet les données récoltées au microcontrôleur STM32 qui va ensuite les
+    chiffrer à l’aide de SSL/TLS puis les envoyer au broker MQTT. Le broker MQTT déchiffre les
+    données et les transmet aux clients qui ont souscrits au topic. Le script Python est un de ces clients
+    et il se charge de récupérer les données et de les écrire dans la base de données
+    \newline
+    \includegraphics[width=420px]{../Images/Sequence_envoie.png}
+
+    \subsection{Diagramme de Merise :}
+    Chaque capteur est identifié par un numéro unique ainsi qu’un nom donné par l’administrateur.
+    Le capteur mesure plusieurs types de grandeurs physiques, spécifiées dans id type.
+    Chaque mesure est liée au capteur, au type de mesure et horodatée
+    \newline
+    \includegraphics[width=420px]{../Images/merise.png}
+    \newpage
+    
+    \subsection{Diagramme de déploiement :}
+    Le système sera déployé en 4 parties distinctes :
+    Un ou plusieurs sous-ensembles capteurs + microcontrôleurs seront installés dans les usines.
+    Ils communiqueront avec le serveur GNU/Linux qui a un broker MQTT, un serveur Node-Red, une
+    base de données MariaDB, un serveur mail ainsi que divers services de sécurisation.
+    Ce serveur sera également utilisé par les PC clients des collaborateurs pour visualiser les données
+    ainsi que par les PC clients de l’IT pour visualiser les données et configurer le système. Tous ces
+    sous-ensembles communiqueront par le réseau.
+    \newline
+    \includegraphics[width=420px]{../Images/Deploiement.png}
+
+    \newpage
+    \subsection{Contraintes techniques et économiques}
+
+
+    \subsubsection{Contraintes Techniques}
+    Le microcontrôleur devra être programmé en Rust ou en C.\newline
+    La distribution Linux devra être Debian ou Arch Linux.\newline
+    Les conteneurs doivent respecter la norme OCI.\newline
+    Les conteneurs doivent être gérés avec Kubernetes.\newline
+    La Dashboard sera faite avec Node-Red.\newline
+    Un serveur DNS doit être fonctionnel pour permettre la résolution de l’url de la dashboard.\newline
+    La connexion au serveur doit se faire via un protocole sécurisé.\newline
+    Le serveur doit être sécurisé avec un pare-feu.\newline
+    Les données doivent transiter via le protocole MQTT sécurisé avec SSL/TLS.\newline
+    Le capteur doit être utilisable en environnement industriel (résistant à la poussière et à la chaleur).\newline
+    Le système doit être sauvegardé pour permettre une restauration complète du système en cas de panne ou de cyberattaque.\newline
+    Le code doit être versionné avec l’outil git et documenté par le biais d’un wiki.\newline
+
+    \subsubsection{Contraintes Economiques}
+    Achat Microcontrôleur DevBoard : 30€ \newline
+    Achat Capteur : 20€
+
+    \subsection{Ressources Utilisées}
+    \begin{tabular}{| C{30px} | C{5cm} | C{8cm} |}
+        \hline
+        \includegraphics[width=30px]{../Images/buildah.png} & Buildah & Création des conteneurs OCI \\
+        \hline
+        \includegraphics[width=30px]{../Images/podman.png} & Podman  & Test des conteneurs OCI \\
+        \hline
+        \includegraphics[width=30px]{../Images/kubernetes.png} & Kubernetes  & Gestion des conteneurs OCI \\
+        \hline
+        \includegraphics[width=30px]{../Images/node-red.png} & Node-Red & Création de la dashboard \\
+        \hline
+        \includegraphics[width=30px]{../Images/authelia.png} & Authelia & Gestion des utilisateurs Node-Red \\
+        \hline
+        \includegraphics[width=30px]{../Images/bind.png} & Bind 9 & Serveur DNS \\
+        \hline
+        \includegraphics[width=30px]{../Images/ssh.png} & SSH & Administration à distance sécurisée \\
+        \hline
+        \includegraphics[width=30px]{../Images/postfix.png} & PostFix & Serveur SMTP pour l'envoi des mails d'alerte \\
+        \hline
+        \includegraphics[width=30px]{../Images/ufw.png} & UFW & Sécurisation réseau du serveur (pare-feux) \\
+        \hline
+        \includegraphics[width=30px]{../Images/mqtt_logo.png} & MQTT & Récupération / Envoie des données du capteur \\
+        \hline
+        \includegraphics[width=30px]{../Images/espressif.png} & STM32H753ZI / ESP32-Wroom32E & Traitement des données du capteur et envoie au serveur \\
+        \hline
+        \includegraphics[width=30px]{../Images/rust.png} & C / Rust & Programmation du STM32 / ESP32 \\
+        \hline
+        \includegraphics[width=30px]{../Images/nuc.jpg} & PC Intel NUC & Serveur Linux \\
+        \hline
+        \includegraphics[width=30px]{../Images/sds011.jpg} & PMS5003 / SDS011 / MQ135 / ADA4632 & Capteur de QAI \\
+        \hline
+        \includegraphics[width=30px]{../Images/mariadb.png} & MariaDB & Base de données \\
+        \hline
+        \includegraphics[width=30px]{../Images/debian.png} & Debian / Arch / Alpine Linux / Ubuntu & Système d'exploitation \\
+        \hline
+        \includegraphics[width=30px]{../Images/veeam.png} & Timeshift / Veeam & Backup du système et des conteneurs OCI \\
+        \hline
+        \includegraphics[width=30px]{../Images/python.png} & Python3 / Rust & Script de récupération et d'envoie des données depuis MQTT vers MariaDB \\
+        \hline
+        \includegraphics[width=30px]{../Images/sphinx.png} & Sphinx / RustDoc & Création du wiki documentant le code \\
+        \hline
+        \includegraphics[width=30px]{../Images/git.png} & Git + Github & Versionning du code \\
+        \hline
+    \end{tabular}
+    \newpage
+    \section{Firmware}
+    \section{Configuration}
+    \section{Conclusion}
+    \section{Annexe}
+    Documentations liées au système
+    \subsection{Mosquitto}
+    \includegraphics[width=60px]{../Images/mqtt_logo.png}
+    \newline
+    \href{https://mosquitto.org/documentation/}{Documentation MQTT}
+    \newline
+    Schéma de fonctionnement du protocol MQTT :
+    \newline
+    \includegraphics[width=420px]{../Images/MQTT.png}
+    \subsection{MariaDB}
+    \includegraphics[width=60px]{../Images/mariadb.png}
+    \newline
+    \href{https://mariadb.org/documentation/}{Documentation MariaDB}
+    \subsection{ESP32}
+    \subsection{Debian}
+    \includegraphics[width=60px]{../Images/debian.png}
+    \newline
+    \href{https://www.debian.org/doc/}{Documentation Debian}
+
+\end{document}
