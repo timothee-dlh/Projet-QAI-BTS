@@ -1,0 +1,6 @@
+CREATE TABLE test (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_capteur VARCHAR(100) NOT NULL,
+    valeur INT,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
