@@ -1,0 +1,524 @@
+[
+    {
+        "id": "d360938686be8b82",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5942f0fcdaddb5e2",
+        "type": "comment",
+        "z": "d360938686be8b82",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "96eb0e85adc2a28c",
+        "type": "mysql",
+        "z": "d360938686be8b82",
+        "mydb": "01835be989821317",
+        "name": "",
+        "x": 600,
+        "y": 660,
+        "wires": [
+            [
+                "8ef5746a783d71e5"
+            ]
+        ]
+    },
+    {
+        "id": "d6d049c55bbba901",
+        "type": "inject",
+        "z": "d360938686be8b82",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 700,
+        "wires": [
+            [
+                "14fd8029456354f3",
+                "a39e7dafc5012741"
+            ]
+        ]
+    },
+    {
+        "id": "14fd8029456354f3",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "SQL Request",
+        "func": "msg.topic = \"SELECT * FROM `projet-db`.capteur1 ORDER BY id DESC LIMIT 1000;\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 660,
+        "wires": [
+            [
+                "96eb0e85adc2a28c"
+            ]
+        ]
+    },
+    {
+        "id": "53aeed2751b2b5c6",
+        "type": "ui_chart",
+        "z": "d360938686be8b82",
+        "name": "",
+        "group": "5d37781f1530b2c2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Capteur 1",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ef5746a783d71e5",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "Data Formatter",
+        "func": "// Récupérer les résultats de la requête MySQL\nlet data = msg.payload;\n\n// Créer un tableau pour stocker les résultats formatés\nlet formattedData = [];\n\n// Parcourir chaque ligne de données\ndata.forEach(row => {\n    // Chaque ligne a une valeur et un timestamp\n    let point = {\n        \"x\": new Date(row.timestamp).getTime(),  // Convertir le timestamp en millisecondes\n        \"y\": row.valeur                    // La valeur associée\n    };\n    \n    // Ajouter le point au tableau formaté\n    formattedData.push(point);\n});\n\n// Envoyer les données formatées vers le graphique\nmsg.payload = [{\n    \"series\": [\"Valeurs\"],\n    \"data\": [formattedData],\n    \"labels\": [\"Timestamp\"]\n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 660,
+        "wires": [
+            [
+                "53aeed2751b2b5c6"
+            ]
+        ]
+    },
+    {
+        "id": "8bfc242ee87c1d56",
+        "type": "mysql",
+        "z": "d360938686be8b82",
+        "mydb": "01835be989821317",
+        "name": "",
+        "x": 600,
+        "y": 740,
+        "wires": [
+            [
+                "3471fc2ba0ce39d2"
+            ]
+        ]
+    },
+    {
+        "id": "a39e7dafc5012741",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "SQL Request",
+        "func": "msg.topic = \"SELECT * FROM `projet-db`.capteur2 ORDER BY id DESC LIMIT 1000;\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 740,
+        "wires": [
+            [
+                "8bfc242ee87c1d56"
+            ]
+        ]
+    },
+    {
+        "id": "1c7ed46488b8da7b",
+        "type": "ui_chart",
+        "z": "d360938686be8b82",
+        "name": "",
+        "group": "5ce69bd36226dcd4",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Capteur 2",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3471fc2ba0ce39d2",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "Data Formatter",
+        "func": "// Récupérer les résultats de la requête MySQL\nlet data = msg.payload;\n\n// Créer un tableau pour stocker les résultats formatés\nlet formattedData = [];\n\n// Parcourir chaque ligne de données\ndata.forEach(row => {\n    // Chaque ligne a une valeur et un timestamp\n    let point = {\n        \"x\": new Date(row.timestamp).getTime(),  // Convertir le timestamp en millisecondes\n        \"y\": row.valeur                    // La valeur associée\n    };\n    \n    // Ajouter le point au tableau formaté\n    formattedData.push(point);\n});\n\n// Envoyer les données formatées vers le graphique\nmsg.payload = [{\n    \"series\": [\"Valeurs\"],\n    \"data\": [formattedData],\n    \"labels\": [\"Timestamp\"]\n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 740,
+        "wires": [
+            [
+                "1c7ed46488b8da7b"
+            ]
+        ]
+    },
+    {
+        "id": "9ebb8575e3b7ec66",
+        "type": "ui_template",
+        "z": "d360938686be8b82",
+        "group": "",
+        "name": "Node-Red Dashboard Custom CSS",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* Main background with a dark blue gradient */\n    body {\n        background: -webkit-linear-gradient(\n            55deg,\n            #002B5B 0%, /* Dark blue */\n            #00448A 50%, /* Slightly lighter blue */\n            #001F3F 100% /* Very dark blue */\n        );\n    }\n\n    /* Top bar */\n    body.nr-dashboard-theme md-toolbar,\n    body.nr-dashboard-theme md-content md-card {\n        background-color: transparent !important;\n        color: #FFFFFF !important;\n    }\n\n    /* Left menu */\n    /* Sidebar */\n    body.nr-dashboard-theme md-sidenav {\n        color: white !important;\n        background-color: rgba(0,0,0,0) !important;\n    }\n    /* Hover selection */\n    a.md-no-style, button.md-no-style {\n        border-radius: 10px !important;\n    }\n    /* Selected */\n    .nr-menu-item-active div button {\n        border-right: 4px solid rgb(41, 98, 255) !important;\n    }\n    /* List */\n    body.nr-dashboard-theme md-sidenav div.md-list-item-inner {\n        color: white !important;\n        background-color: rgba(40,85,165,1) !important;\n        border-radius: 10px !important;\n    }\n\n    /* Groups */\n    ui-card-panel {\n        background-color: rgba(255,255,255,0.1) !important;\n        border-radius: 10px !important;\n    }\n    .nr-dashboard-theme ui-card-panel {\n        border: none !important;\n    }\n    /* Name groups */\n    .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n        color: rgba(255, 255, 255, 0.5) !important;\n    }\n\n    /* Buttons */\n    .nr-dashboard-theme .nr-dashboard-button .md-button {\n        background-color: rgba(255,255,255,.1) !important;\n    }\n    .md-button {\n        border-radius: 10px !important;\n    }\n\n    /* Dropdown menu */\n    .nr-dashboard-theme md-select-menu {\n        background-color: rgba(40,85,165,1) !important;\n    }\n    .nr-dashboard-theme md-select-menu, .nr-dashboard-theme md-select-menu md-option {\n        background-color: transparent !important;\n    }\n    .nr-dashboard-theme .md-select-menu-container {\n        border-radius: 10px !important;\n        border: none !important;\n    }\n    .nr-dashboard-theme md-select-menu md-option[selected] {\n        color: white !important;\n        background-color: #1a3566 !important;\n    }\n\n    /* Template */\n    md-card>img, md-card>md-card-header img, md-card md-card-title-media img {\n        border-radius: 10px !important;\n    }\n\n    /* Color picker text BG */\n    .nr-dashboard-theme .color-picker-input-wrapper > input {\n        color: white !important;\n        background-color: transparent !important;\n    }\n</style>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 960,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b9cc463e60c3f6c8",
+        "type": "mysql",
+        "z": "d360938686be8b82",
+        "mydb": "01835be989821317",
+        "name": "",
+        "x": 600,
+        "y": 800,
+        "wires": [
+            [
+                "6a67ab13abd5e9b6"
+            ]
+        ]
+    },
+    {
+        "id": "475b7f38d8f3ec58",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "SQL Request",
+        "func": "msg.topic = \"SELECT * FROM `projet-db`.capteur3 ORDER BY id DESC LIMIT 1000;\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 800,
+        "wires": [
+            [
+                "b9cc463e60c3f6c8"
+            ]
+        ]
+    },
+    {
+        "id": "f1f5edd6949bc67b",
+        "type": "ui_chart",
+        "z": "d360938686be8b82",
+        "name": "",
+        "group": "b73a9dfe463b9a0d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Capteur 3",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a67ab13abd5e9b6",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "Data Formatter",
+        "func": "// Récupérer les résultats de la requête MySQL\nlet data = msg.payload;\n\n// Créer un tableau pour stocker les résultats formatés\nlet formattedData = [];\n\n// Parcourir chaque ligne de données\ndata.forEach(row => {\n    // Chaque ligne a une valeur et un timestamp\n    let point = {\n        \"x\": new Date(row.timestamp).getTime(),  // Convertir le timestamp en millisecondes\n        \"y\": row.valeur                    // La valeur associée\n    };\n    \n    // Ajouter le point au tableau formaté\n    formattedData.push(point);\n});\n\n// Envoyer les données formatées vers le graphique\nmsg.payload = [{\n    \"series\": [\"Valeurs\"],\n    \"data\": [formattedData],\n    \"labels\": [\"Timestamp\"]\n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 800,
+        "wires": [
+            [
+                "f1f5edd6949bc67b"
+            ]
+        ]
+    },
+    {
+        "id": "8eefe1b0c4704626",
+        "type": "mysql",
+        "z": "d360938686be8b82",
+        "mydb": "01835be989821317",
+        "name": "",
+        "x": 600,
+        "y": 860,
+        "wires": [
+            [
+                "882b7f115df9a044"
+            ]
+        ]
+    },
+    {
+        "id": "905f155c21fd312e",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "SQL Request",
+        "func": "msg.topic = \"SELECT * FROM `projet-db`.capteur4 ORDER BY id DESC LIMIT 1000;\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 860,
+        "wires": [
+            [
+                "8eefe1b0c4704626"
+            ]
+        ]
+    },
+    {
+        "id": "64740fa18ff93f53",
+        "type": "ui_chart",
+        "z": "d360938686be8b82",
+        "name": "",
+        "group": "c1af9f5a35afe0ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Capteur 4",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "882b7f115df9a044",
+        "type": "function",
+        "z": "d360938686be8b82",
+        "name": "Data Formatter",
+        "func": "// Récupérer les résultats de la requête MySQL\nlet data = msg.payload;\n\n// Créer un tableau pour stocker les résultats formatés\nlet formattedData = [];\n\n// Parcourir chaque ligne de données\ndata.forEach(row => {\n    // Chaque ligne a une valeur et un timestamp\n    let point = {\n        \"x\": new Date(row.timestamp).getTime(),  // Convertir le timestamp en millisecondes\n        \"y\": row.valeur                    // La valeur associée\n    };\n    \n    // Ajouter le point au tableau formaté\n    formattedData.push(point);\n});\n\n// Envoyer les données formatées vers le graphique\nmsg.payload = [{\n    \"series\": [\"Valeurs\"],\n    \"data\": [formattedData],\n    \"labels\": [\"Timestamp\"]\n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 860,
+        "wires": [
+            [
+                "64740fa18ff93f53"
+            ]
+        ]
+    },
+    {
+        "id": "01835be989821317",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "192.168.253.61",
+        "port": "3306",
+        "db": "projet-db",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "5d37781f1530b2c2",
+        "type": "ui_group",
+        "name": "Capteur 1",
+        "tab": "93e74bbc26bcd634",
+        "order": 1,
+        "disp": true,
+        "width": "14",
+        "collapse": true,
+        "className": "chart"
+    },
+    {
+        "id": "5ce69bd36226dcd4",
+        "type": "ui_group",
+        "name": "Capteur 2",
+        "tab": "93e74bbc26bcd634",
+        "order": 2,
+        "disp": true,
+        "width": 14,
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "b73a9dfe463b9a0d",
+        "type": "ui_group",
+        "name": "Capteur 3",
+        "tab": "93e74bbc26bcd634",
+        "order": 3,
+        "disp": true,
+        "width": 14,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c1af9f5a35afe0ee",
+        "type": "ui_group",
+        "name": "Capteur 4",
+        "tab": "93e74bbc26bcd634",
+        "order": 4,
+        "disp": true,
+        "width": 14,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "93e74bbc26bcd634",
+        "type": "ui_tab",
+        "name": "Charts",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
