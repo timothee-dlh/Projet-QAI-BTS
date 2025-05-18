@@ -10,32 +10,35 @@ void cleanup(MYSQL *conn, struct mosquitto *mqtt_handle);
 
 MYSQL *conn;
 
+char * arg;
+
 int main(int argc, char **argv){
-    if(argc < 6){ // Usage
-        printf("Usage: ./mqtt_to_bdd.elf host port topic sql_username sql_password\n");
+    if(argc < 8){ // Usage
+        printf("Usage: ./mqtt_to_bdd.elf hôte port topic utilisateur_sql mdp_bdd base_sql nom_capteur\n");
         return 1;
     }
+  arg = argv[7];
 
-    conn = mysql_init(NULL); // Initialize the sql instance
+    conn = mysql_init(NULL); // Initialise l'instance mariadb
 
     if (conn == NULL) {
         fprintf(stderr, "Erreur d'initialisation de MySQL: %s\n", mysql_error(conn));
         exit(1);
     } else printf("SQL instance initiated\n");
 
-    if (mysql_real_connect(conn, "localhost", argv[4] , argv[5], "Projet", 0, NULL, 0) == NULL) { // Connect to database
+    if (mysql_real_connect(conn, "127.0.0.1", argv[4] , argv[5], argv[6], 3306, NULL, 0) == NULL) { // Connecte à la base de données
         fprintf(stderr, "Erreur de connexion à la base de données: %s\n", mysql_error(conn));
         mysql_close(conn);
         exit(1);
     }else printf("Connection to the database succesful\n");
 
-    if(mosquitto_lib_init() != MOSQ_ERR_SUCCESS){ // Allocate ressources for mosquitto library
+    if(mosquitto_lib_init() != MOSQ_ERR_SUCCESS){ // Alloue les ressources requises par la libraire MQTT
         printf("Error while init lib\n");
         exit(1);
     } 
 
     void *user_data = NULL;
-    struct mosquitto *mqtt_handle = mosquitto_new("Script MQTT_BDD", 0, user_data); // New instance of mosquitto
+    struct mosquitto *mqtt_handle = mosquitto_new(argv[3], 0, user_data); // Crée une nouvelle instance MQTT
     if(mqtt_handle == NULL){
         printf("Error while creating new instance of mosquitto\n");
         cleanup(conn, mqtt_handle);
@@ -43,15 +46,17 @@ int main(int argc, char **argv){
     } 
    
     mosquitto_message_callback_set(mqtt_handle, mqtt_callback);
-
-    if(mosquitto_connect(mqtt_handle, argv[1], atoi(argv[2]), 10) != MOSQ_ERR_SUCCESS){ // Connect to mqtt broker
+    
+    mosquitto_username_pw_set(mqtt_handle, "esp", "esp");
+    
+  if(mosquitto_connect(mqtt_handle, argv[1], atoi(argv[2]), 10) != MOSQ_ERR_SUCCESS){ // Connecte au broker MQTT
         printf("Error while connecting to mqtt broker\n");
         cleanup(conn, mqtt_handle);
         exit(1);
     } else printf("Connection to the broker successful\n");
 
     int err = 0;
-    while((err = mosquitto_subscribe(mqtt_handle, NULL, argv[3], 1) != MOSQ_ERR_SUCCESS)){ // Subscribe to topic
+    while((err = mosquitto_subscribe(mqtt_handle, NULL, argv[3], 1) != MOSQ_ERR_SUCCESS)){ // Souscrit au topic passé en argument du programme
         printf("Error while subscribing :%d\nRetrying...", err);
         sleep(1);
     }
@@ -59,7 +64,7 @@ int main(int argc, char **argv){
 
     err = mosquitto_loop_forever(mqtt_handle, -1, 1);
     if(err != MOSQ_ERR_SUCCESS){
-        printf("Error while creating thread : %d\n", err);
+        printf("Error while creating the mosquitto loop : %d\n", err);
         cleanup(conn, mqtt_handle);
         exit(1);
     }
@@ -69,14 +74,16 @@ int main(int argc, char **argv){
 
 void mqtt_callback(struct mosquitto *mqtt, void *user_data, const struct mosquitto_message *message){
      if (message->payloadlen) {
-        printf("Message reçu %s: %s\n", message->topic, (char *)message->payload);
         char query[512];
-        snprintf(query, 256, "INSERT INTO test (valeur, nom_capteur) VALUES ('%s', '%s')", (char *)message->payload, (char *)message->topic);
+        // Insertion des données dans la base de données
+        snprintf(query, 256, "INSERT INTO %s (valeur, nom_capteur) VALUES ('%s', '%s')", arg, (char *)message->payload, (char *)message->topic);
+        // Log de la Query dans le terminal
         printf("Query: %s\n", query);
         if (mysql_query(conn, query)) {
             fprintf(stderr, "Erreur lors de l'exécution de la requête: %s\n", mysql_error(conn));
         }
     } else {
+        // Si le message est vide alors log dans le terminal
         printf("Message reçu %s (message vide)\n", message->topic);
     }
 }
@@ -84,6 +91,6 @@ void mqtt_callback(struct mosquitto *mqtt, void *user_data, const struct mosquit
 void cleanup(MYSQL *conn, struct mosquitto *mqtt_handle){
 
     mysql_close(conn);
-    mosquitto_destroy(mqtt_handle); // Remove mqtt instance 
-    mosquitto_lib_cleanup(); // Cleanup ressources
+    mosquitto_destroy(mqtt_handle); // Supprime l'instance MQTT
+    mosquitto_lib_cleanup(); // Libère les ressources
 }

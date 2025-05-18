@@ -1,17 +1,18 @@
-CC=gcc
+CC=clang
 
 SOURCE=main.c
 OUT=main.elf
-LIB=libmosquitto.so libmariadb.so 
+LIB=lib/libmosquitto.a lib/libmariadb.a lib/libmariadbclient.a lib/libssl.a lib/libcrypto.a
 OBJ=main.o
-INCLUDES=/usr/include/mysql
+INCLUDES=./include
+FLAGS=-O2 -static -v
 
 all: main.elf
 
 main.elf: main.o
-	gcc $(LIB) $(OBJ) -I $(INCLUDES) -o $(OUT)
+	$(CC) $(FLAGS) -I $(INCLUDES) -L $(PWD)/lib $(OBJ) $(LIB)   -o $(OUT)
 
 main.o: main.c
-		gcc -c $(SOURCE) -I $(INCLUDES)
+		$(CC) -c $(SOURCE) -I $(INCLUDES)
 clean:
 	rm -rf *.out *.elf *.o

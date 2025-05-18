@@ -9,8 +9,15 @@
 \usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
 \usepackage{amsmath}
 \usepackage{listings}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage{tocloft}
+\usepackage{fontspec}
+\usepackage{subcaption} % Package pour créer des sous-figures
+\usepackage{footnote} % Package pour améliorer la gestion des notes de bas de page
+\usepackage{float}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
 \geometry{left=3cm, right=3cm, top=2.5cm, bottom=2.5cm} % Définir les marges
 
 \definecolor{companycolor}{RGB}{0,82,155}  
@@ -23,29 +30,149 @@
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 
-\lstset{ % General setup for the package
-    language=vbscript,
-    basicstyle=\small\sffamily,
-    numbers=left,
-     numberstyle=\tiny,
-    frame=tb,
-    tabsize=4,
-    columns=fixed,
-    showstringspaces=false,
-    showtabs=false,
-    keepspaces,
-    commentstyle=\color{gray},
-    keywordstyle=\color{blue}
-    extendedchars=true,
-    inputencoding=utf8,
-    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {ô}{{\^o}}1
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{stringcolor}{rgb}{0.1,0.1,0.7} % Couleur des chaînes de caractères
+\definecolor{keywordcolor}{rgb}{0.7,0.1,0.1} % Couleur des mots-clés
+\definecolor{commentcolor}{rgb}{0.1,0.5,0.1} % Couleur des commentaires
+
+\lstdefinestyle{javascript}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={\%*}{*)}
 }
 
+\lstdefinestyle{css}{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={\%*}{*)}
+}
+\lstdefinestyle{C}{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={\%*}{*)}
+}
+
+\lstdefinestyle{ahk}{
+    language=vbscript,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor}\itshape,
+    stringstyle=\color{stringcolor},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+\lstdefinestyle{bash}{
+    language=bash,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor}\itshape,
+    stringstyle=\color{stringcolor},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+\lstdefinestyle{sql}{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{teal}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{magenta},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+
+% TODO: Capital Social, Siège Social, Status juridique
 \begin{document}
     \begin{titlepage}
         \centering
         \includegraphics[width=7cm]{../Images/hager.png}\hfill
-        \includegraphics[width=7cm]{../Images/uimm.jpg}\par\vspace{1cm} % Remplacez par le logo de votre entreprise
+        \includegraphics[width=7cm]{../Images/uimm.jpg}\par\vspace{1cm} 
         {\scshape\LARGE HagerGroup}\hspace{4cm}
         {\scshape\LARGE UIMM Alsace\par}
         \vspace{2.5cm}
@@ -95,11 +222,12 @@
     Par la suite, de nombreuses acquisitions d'entreprises par HagerGroup permettent une diversification des activitées et assurent ainsi la prospérité du groupe. 
     \vspace{2cm}
     \newline
-    \includegraphics[width=220px]{../Images/obernai_ancien.png}
+    \includegraphics[width=200pt]{../Images/obernai_ancien.png}
     \hspace{1cm}
-    \includegraphics[width=220px]{../Images/construction_obernai.png}
+    \includegraphics[width=200pt]{../Images/construction_obernai.png}
+    \hspace{0.35cm}
     \textit{Inauguration du site d'Obernai}
-    \hspace{3.35cm}
+    \hspace{2cm}
     \textit{Agrandissement du site d'Obernai}
     \newpage
     % TODO: Histoire de l'entreprise
@@ -108,44 +236,51 @@
     \subsubsection{Global}
     \vspace{0.5cm}
     Hager Group est une entreprise internationale avec des sites de production présents en Europe et en Asie et une distribution des produits dans plus de 100 pays différents.
-    \vspace{0.1cm}
-    \newline
-    \includegraphics[width=420px]{../Images/Localisations.png}
-    \newline
-    \textit{Figure 1 : localisations des sites de production HagerGroup dans le monde}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=350pt]{../Images/Localisations.png}
+        \caption{Localisations des sites de production HagerGroup dans le monde}
+        \label{fig:hager_global}
+    \end{figure}
     \subsubsection{Site principale}
-    \includegraphics[width=420px]{../Images/maps_hager.png}
-    \newline
-    \textit{Figure 2 : localisation du plus gros site Hager à Obernai}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=350pt]{../Images/maps_hager.png}
+        \caption{Localisation du plus gros site Hager à Obernai}
+        \label{fig:hager_obernai}
+    \end{figure}
     \subsection{Secteurs d'activité}
-    \vspace{0.5cm}
-    \includegraphics[width=420px]{../Images/Marques.png}
-    \newline
-    \textit{Figure 3 : les différentes marques HagerGroup}
-    \newline
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=400pt]{../Images/Marques.png}
+        \caption{Les différentes marques HagerGroup}
+        \label{fig:hager_marques}
+    \end{figure}
     \subsection{Produits phares}
-    \vspace{0.5cm}
-    \includegraphics[width=420px]{../Images/Secteur.png}
-    \newline
-    \textit{Figure 4 : produits phares de HagerGroup}
-    \vspace{0.3cm}
-    \newline
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=400pt]{../Images/Secteur.png}
+        \caption{Produits phares de HagerGroup}
+        \label{fig:hager_produits}
+    \end{figure}
     \begin{itemize}
         \item Disjoncteur magnéto-thermique : disjoncteur protégeant contre les courts-circuits (magnéto) et contre les surcharges (thermique).
         \item Interrupteur différentiel : protège les personnes en détectant une fuite de courant à la terre.
         \item Borne de recharge : permet la recharge rapide de véhicules électriques.
         \item Tableau de distribution : tableau hébergeant les différents éléments constituant une installation éléctrique (ex: disjoncteurs, interrupteurs différentiels...).
     \end{itemize}
+    \newpage
     \subsection{Chiffres clés}
     \vspace{0.5cm}
     Hager Group est une entreprise de grande envergure avec plus de 13000 collaborateurs, un chiffre d'affaire de plus de 3 milliards d'euros et 22 sites de production répartis en Europe et en Asie.
     \vspace{2cm}
     \newline
-    \includegraphics[width=420px]{../Images/Chiffres.png}
-    \vspace{0.2cm}
-    \newline
-    \textit{Figure 5 : Chiffres clés de l'année 2023}
-    \vspace{1.1cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=350pt]{../Images/Chiffres.png}
+        \caption{Chiffres clés de l'année 2023}
+        \label{fig:chiffres_clef}
+    \end{figure}
     \begin{itemize}
         \item Chiffre d'affaire : chiffre d'affaire total du groupe (Europe, Asie, USA).
         \item Collaborateurs : différents services au sein de HagerGroup (RH, vente, informatique, maintenance...).
@@ -154,28 +289,30 @@
     \newpage
     \subsection{Organisation des services informatiques}
     \vspace{0.5cm}
-    Le service informatique (SI) au sein de HagerGroup se divise en quatre grands groupes (cf. Figure 6) :
+    Le service informatique (SI)\footnote{Service Informatique} au sein de HagerGroup se divise en quatre grands groupes (cf. Figure \ref{fig:orga_iit}) :
     \begin{enumerate}
         \item une équipe en charge de l'administration des réseaux industriels (IIT\footnote{Industrial Information Technology, synonyme : OT}),
         \item une équipe en charge du développement d'applications pour le groupe,
         \item une équipe en charge de l'administration des réseaux bureautique,
         \item les relais IIT en charge de la maintenance des équipements informatiques industriels.
     \end{enumerate}
-    \includegraphics[width=420px]{../Images/orga_iit.png}
-    \newline
-    \textit{Figure 6 : schéma de l'organisation du SI\footnote{Service Informatique}}
-    \vspace{0.5cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=350pt]{../Images/orga_iit.png}
+        \caption{Schéma de l'organisation du SI}
+        \label{fig:orga_iit}
+    \end{figure}
     \newpage
     \subsection{Présentation de l'équipe}
     \vspace{0.5cm}
     Les relais IIT sont l'interface entre l'équipe IIT (Industrial Information Technology) et la production. 
     Ils sont en charge de la maintenance des équipements informatiques présents au sein des usines et sont donc obligés de travailler avec des automaticiens, des techniciens de maintenance, avec l'équipe en charge des serveurs ainsi qu'avec les développeurs.
     \newline \newline
-    Ci-dessous une liste non exaustive des personnes avec qui l'apprenti travaille :
+    Ci-dessous une liste non exaustive des collaborateurs de l'apprenti :
     \newline \newline
 
     \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
-    \renewcommand{\arraystretch}{1.5} % Augmenter l'espace vertical entre les lignes
+    \renewcommand{\arraystretch}{1.5} 
     
     {
     \centering{
@@ -204,28 +341,44 @@
     \vspace{0.5cm}
         \subsection{Sauvegarde du parc informatique}
         \vspace{0.3cm}
-        Le parc informatique industriel comprenant tous les PC servant à la production dans les usines est sauvegardé via la solution Veeam (cf. Figure 8). Les sauvegardes sont hebdomadaires et incrémentales. Elles sont stockées sur un serveur (cf. Figure 7) pour une durée de 3 mois et permettent une restauration complète du système ainsi que la restauration de fichiers individuels.
+        Le parc informatique industriel comprenant tous les PC servant à la production dans les usines est sauvegardé via la solution Veeam (cf. Figure \ref{fig:veeam_backup}). Les sauvegardes sont hebdomadaires et incrémentales. Elles sont stockées sur un serveur (cf. Figure \ref{fig:veeam_infra}) pour une durée de 3 mois et permettent une restauration complète du système ainsi que la restauration de fichiers individuels.
         \vspace{1cm}
         \newline 
         \textbf{Infrastructure Veeam}
-        \newline \newline
-        \includegraphics[width=400px]{../Images/infra_veeam.png}
-        \newline
-        \textit{Figure 7 : schéma de l'infrastrucure Veeam}
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=430pt]{../Images/infra_veeam.png} 
+            \caption{Schéma de l'infrastrucure Veeam}
+            \label{fig:veeam_infra}
+        \end{figure}
         \newpage 
         \textbf{Agent Veeam}
-        \vspace{0.8cm}
-        \newline \newline
-        \includegraphics[width=400px]{../Images/veeam_backup.png}
-        \newline
-        \textit{Figure 8 : Historique des sauvegardes d'un PC réalisées par l'agent Veeam }
-        \vspace{0.8cm}
-        \newline
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=430pt]{../Images/veeam_backup.png} 
+            \caption{Historique des sauvegardes d'un PC réalisées par l'agent Veeam}
+            \label{fig:veeam_backup}
+        \end{figure}
+        \vspace{0.5cm}
         Cette sauvegarde hebdomadaire est incrémentale, sur ce diagramme une sauvegarde sur deux est incrémentale.
+
+        \vspace{0.5cm}
+        \subsection{Formation des utilisateurs}
+        \vspace{0.5cm}
+        Formation des utilisateurs aux technologies en place au sein de l'entreprise :
+        \begin{itemize}
+            \item utilisation de la console Ivanti pour la gestion du parc informatique,
+            \item configuration des sauvegardes Veeam,
+            \item utilisation du serveur SFTP pour le transfert sécurisé de fichiers par le réseau.
+        \end{itemize}
+
         \newpage
+
         \subsection{Cartographie du réseau industriel}
         \vspace{0.5cm}
-        La cartographie inclut les PC de production, les PLC\footnote{Programmable Logic Controller} ainsi que les périphériques IP\footnote{Internet Protocol} tels que des caméras, imprimantes, IHM\footnote{Interface Homme Machine}... (cf. Figure 9).
+        La cartographie inclut les PC de production, les PLC\footnote{Programmable Logic Controller} ainsi que les périphériques IP\footnote{Internet Protocol} tels que des caméras, imprimantes, IHM\footnote{Interface Homme Machine}... (cf. Figure \ref{fig:xmind}).
         Cette cartographie est utilisée pour sécuriser le parc informatique et permet également de définir un niveau de criticité pour chaque poste (BCP\footnote{Business Continuity Plan
         {
         \footnotesize
@@ -236,125 +389,906 @@
     \end{itemize}}} code). Ce code permet de déterminer l'impact de l'arrêt d'un PC sur la production, qu'il soit dû à une panne ou une cyberattaque.
         \vspace{0.5cm}
         \newline
-        \includegraphics[width=420px]{../Images/cartographie.png}
-        \vspace{0.4cm}
-        \newline
-        \textit{Figure 9 : Cartographie du réseau XMind}
-        \newline \newline \newline
-        \includegraphics[width=200px]{../Images/pc1.png}
-        \hspace{2cm}
-        \includegraphics[width=200px]{../Images/pc3.png}
-        \textit{Figure 10: PC extrait de la cartographie}
-        \hspace{2.4cm}
-        \textit{Figure 11: PC extrait de la \mbox{cartographie}}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=430pt]{../Images/cartographie.png} 
+            \caption{Cartographie du réseau XMind}
+            \label{fig:xmind}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=150pt]{../Images/pc1.png} 
+                \caption{PC extrait de la cartographie}
+                \label{fig:PC_WIN7}
+            \end{subfigure}
+            \hfill
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=150pt]{../Images/pc3.png} 
+                \caption{PC extrait de la cartographie}
+                \label{fig:PC_WIN10}
+            \end{subfigure}
+            \caption{Extrait de la cartographie}
+            \label{fig:images_cote_a_cote}
+        \end{figure}
         \newpage
         \subsection{Provisioning de postes}
         \vspace{0.5cm}
-        Les nouveaux PC sont provisionnés par PXE\footnote{Preboot Execution Environment}, enrollés dans l'AD\footnote{Active Directory} à l'aide du compte intune et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form (cf. Figure 12).
-        \vspace{0.5cm}
-        \newline
-        \includegraphics[width=420px]{../Images/provisionning.png}
-        \newline
-        \textit{Figure 12 : Provisioning de nouveaux PC via PXE et Ivanti.}
+        Les nouveaux PC sont provisionnés par PXE\footnote{Preboot Execution Environment}, enrollés dans l'AD\footnote{Active Directory} à l'aide du compte intune et leurs informations renseignées dans la console Ivanti à l'aide de l'outil Custom Data Form (cf. Figure \ref{fig:provisionning}).
         \vspace{0.3cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=300pt]{../Images/provisionning.png} 
+            \caption{Provisioning de nouveaux PC via PXE et Ivanti.}
+            \label{fig:provisionning}
+        \end{figure}
         \subsection{Migration de PC de production}
         \vspace{0.5cm}
         Les anciennes applications ainsi que leurs configurations sont transférées sur le nouveau PC si possible, sinon une mise à jour est faite vers un applicatif plus récent. Le PC est ensuite testé et validé dans un environnement de test puis mis en production.
         \vspace{0.3cm}
-        \newline
-        \includegraphics[width=420px]{../Images/migration.png}
-        \newline
-        \textit{Figure 13 : Migration de PC depuis Windows 7 vers Windows 10.}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=300pt]{../Images/migration.png} 
+            \caption{Migration de PC de production depuis Windows 7 vers Windows 10}
+            \label{fig:migration}
+        \end{figure}
         \newpage
 
         \subsection{Ecriture de scripts}
-        \subsubsection{Script de purge de fichiers :}
-\begin{lstlisting}
-' Fichier de configuration de l'application
-ConfigFile := "config.ini"
+        \subsubsection{Script de purge de disque :}
+        \lstinputlisting[style=ahk, caption={Script de purge de disque}]{disque.ahk}
 
-'Lecture des paramètres depuis le fichier de configuration
-Drive := IniRead(ConfigFile, "Settings", "Drive", "")
+        \newpage
+        \section{Projet E6}
+        \subsection{Gestion de projet}
+        L’objectif de ce projet est de pouvoir mesurer la qualité de l’air des usines ainsi que d’envoyer des alertes si des seuils sont dépassés. 
+        \newline
+        Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer les données. Il va ensuite s'authentifier et les envoyer au broker MQTT hébergé sur le serveur Linux. \newline
+Le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les afficher sur une Dashboard et envoyer des alertes si besoin.
 
-Output_file := IniRead(ConfigFile, "Settings", "LogFile", "C:\tmp\log.txt")
+        \subsubsection{Diagramme de contexte :}
+Le capteur de QAI effectue des mesures à intervalle régulier, ces mesures sont transmises au microcontrôleur ESP32 qui les transmet à son tour au serveur. Le serveur traite les données, les stocke et les affiche sur une Dashboard. \newline 
+La Dashboard est accessible par les utilisateurs pour visualiser les données et par les administrateurs pour configurer le système.
 
-Dir_Path := IniRead(ConfigFile, "Settings", "FolderPath", "")
-FileDeleteDate := IniRead(ConfigFile, "Settings", "FileRemoveTime", "180")
-DiskTreshold := IniRead(ConfigFile, "Settings", "DiskTreshold", "80")
-TresholdDate := IniRead(ConfigFile, "Settings", "TresholdFileTime", "180")
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/Contexte_CDC.png} 
+            \caption{Diagramme de contexte prévisionnel}
+            \label{fig:contexte}
+        \end{figure}
 
-FileDeleteDate := -FileDeleteDate
-TresholdDate := -TresholdDate
+        \newpage
+        \subsubsection{Diagramme UML de cas d’utilisation :}
+        Le technicien informatique accède à l’interface de paramétrage du système après c’être authentifié.\newline
+        Il peut paramétrer les alertes et le système de capteurs depuis cette interface.
+        L’utilisateur peut consulter les données après authentification et reçoit des alertes mail si un seuil de QAI est dépassé.\newline
+        Le microcontrôleur récupère les données des capteurs et les transmet au serveur de centralisation.
 
-' Convertit le temps en ms
-Wait := IniRead(ConfigFile, "Settings", "WaitTime", "5") * 60 * 60 * 1000 
+        \vspace{1cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/Cas_utilisation.png} 
+            \caption{Diagramme des cas d'utilisation prévisionnel}
+            \label{fig:utilisation}
+        \end{figure}
 
-Loop {
-    ' Récupère la date actuelle
-    Current_Date := A_Now
+        \newpage
+        \subsubsection{Diagramme de séquence de visualisation des données :}
 
-    ' Obtient l'espace libre en octets.
-    FreeSpace := Round(DriveGetSpaceFree(Drive) / 1000, 2)  
-    Capacity := Round(DriveGetCapacity(Drive)/ 1000, 2)
-    Percentage := Round(FreeSpace * 100 / Capacity)
-    
-    ' Permet de changer l'ancienneté des fichiers à supprimer 
-    ' si le disque dépasse un seuil de remplissage.
-    if (Percentage > DiskTreshold){
-        Date_new := DateAdd(Current_Date, TresholdDate, "Days")
-    } else {
-        Date_new := DateAdd(Current_Date, FileDeleteDate, "Days")
+        Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un navigateur internet.\newline
+        L’URL sera convertie en adresse IP par le serveur DNS, puis le serveur Authelia se chargera de l’authentification de l’utilisateur.\newline
+        Enfin, Node-Red va récupérer les données dans la base de données MariaDB et les afficher sur le poste client.\newline
+
+        \vspace{1cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/Sequence_visu.png} 
+            \caption{Diagramme de séquence de visualisation des données}
+            \label{fig:Sequence_visu}
+        \end{figure}
+
+        \newpage
+        \subsubsection{Diagramme de séquence de réception / envoi des données :}
+
+        Le capteur de QAI transmet les données récoltées au microcontrôleur ESP32 qui va ensuite les publier sur le broker MQTT.
+        Le broker MQTT publie les données reçues aux clients qui ont souscrits au topic. 
+        Le programme C est un de ces clients et il se charge de récupérer les données et de les écrire dans la base de données.
+
+        \vspace{1cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/Sequence_envoie.png} 
+            \caption{Diagramme de séquence d'envoi des données}
+            \label{fig:Sequence_envoie}
+        \end{figure}
+
+        \subsubsection{Diagramme de Gantt}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/Gantt.png} 
+            \caption{Diagramme de Gantt prévisionnel}
+            \label{fig:Gantt}
+        \end{figure}
+
+        \newpage
+        \subsubsection{Structure interne de la base de données}
+
+        Cette base de données contient quatre tables : "capteur1", "capteur2", "capteur3" et "capteur4". \newline
+        Chaque table a les colonnes suivantes :
+
+        \begin{itemize}
+            \item \textbf{id} : Identifiant unique.
+            \item \textbf{nom\_capteur} : Nom du capteur.
+            \item \textbf{valeur} : Valeur mesurée.
+            \item \textbf{timestamp} : Horodatage de la mesure.
+        \end{itemize}
+        Chaque table stocke des données de capteurs différents avec une structure identique.
+
+        \vspace{1cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/sql_graph.png} 
+            \caption{Structure interne de la base de données MariaDB}
+            \label{fig:struct_db}
+        \end{figure}
+
+        \subsection{Matériels utilisés}
+        \begin{itemize}
+            \item ESP32 WT32-ETH01
+            \item Intel NUC
+            \item Capteur de qualité d'air intérieur MQ135
+        \end{itemize}
+
+        \newpage
+        \subsection{Logiciels Utilisés}
+        \begin{itemize}
+            \item C : Programmation de l'ESP32 et des scripts
+            \item Podman : Création des conteneurs OCI
+            \item Node-Red : Création de l'interface de visualisation des données
+            \item SSH : Connexion au serveur à distance 
+            \item PostFix : Serveur mail SMTP
+            \item UFW : PareFeux
+            \item MQTT : Protocol de communication utilisé pour transmettre les données entre l'ESP32 et le serveur
+            \item SDS011 : Capteur de qualité d'air 
+            \item MariaDB : Base de données 
+            \item Debian : Système d'exploitation GNU/Linux
+            \item Sphinx : Logiciel de documentation 
+            \item Git + Github : Logiciel et serveur de versionning
+            \item Javascript + CSS
+        \end{itemize}
+
+        \newpage
+        \subsection{NodeRed}
+        \vspace{0.5cm}
+        Node-Red est un environnement de développement basé sur des flux, utilisant une interface glisser-déposer pour créer des automatisations en connectant des nœuds qui représentent des entrées, des traitements et des sorties, le tout s'exécutant sur un runtime Node.js.
+        \newline
+        Node-Red s'éxecute dans un environnement conteneurisé dans une image suivant le format standard OCI. L'image officielle fournie par Node-Red à été utilisée et récupérée via podman.
+        \vspace{0.5cm}
+        \begin{lstlisting}[style=bash, caption={Podman création \& lancement du conteneur Node-Red}, label={lst:podman_node_red}]
+podman pull node-red
+podman run -it -p 1880:1880 --name dashboard --network host dashboard -v node_red_data:/data
+podman start dashboard
+        \end{lstlisting}
+
+        \subsubsection{Flow 1 :}
+        Le flow 1 est en charge de la connexion à la base de données et du formatage des données pour l'affichage dans l'interface utilisateur
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/dashboard_flow1.png}
+            \caption{Connexion à la base de données et formattage des données}
+            \label{fig:flow1}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=200pt]{../Images/node_timestamp.png} 
+            \caption{Ce noeud active toutes les minutes les noeuds qui lui sont connectés}
+            \label{fig:timestamp}
+        \end{figure}
+        \subsubsection{Requête SQL de récupération des données}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=300pt]{../Images/node_sql.png} 
+            \caption{Cette combinaison de noeuds envoie une requête SQL à la base de données pour récupérer les 1000 dernières valeurs d'un capteur}
+            \label{fig:sql}
+        \end{figure}
+        \vspace{1cm}
+        L'image montre deux nœuds dans un flux Node-RED.\newline Le premier nœud, étiqueté "SQL Request", est utilisé pour exécuter des requêtes SQL sur une base de données.\newline Ce nœud est configuré pour envoyer une requête SQL à la base données, récupérer les valeurs et les transmettre sous forme de message msg.payload au nœud suivant dans le flux.
+
+        \vspace{0.5cm}
+Le second nœud, étiqueté "project-db", représente la base de données à laquelle la requête SQL est envoyée (projet-db).\newline Ce nœud est configuré avec les informations de connexion nécessaires pour accéder à la base de données "project-db" cf Figure \ref{fig:bdd}.\newline Une fois la requête exécutée, les résultats sont renvoyés au nœud "SQL Request", qui les transmet ensuite au reste du flux.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/node_bdd.png} 
+            \caption{Paramètres du noeud de connexion à la base de données}
+            \label{fig:bdd}
+        \end{figure}
+        \newpage
+        \begin{lstlisting}[style=sql, caption={Requête SQL de récupération des données du capteur 1}, label=lst:SQL_capteur]
+    SELECT * 
+    FROM `projet-db`.capteur1
+    ORDER BY id DESC 
+    LIMIT 1000;
+        \end{lstlisting}
+        \vspace{1cm}
+
+        Les 1000 dernières données sont récupérées par une requête SQL cf \newline Listing \ref{lst:SQL_capteur}, triées par ordre descendant afin d'avoir les données les plus \newline récentes. 
+
+        \subsubsection{Affichage des données}
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/node_chart.png} 
+            \caption{Paramètres du noeud d'affichage des données de la base de données}
+            \label{fig:chart}
+        \end{figure}
+        \newpage
+        \subsubsection{Code de conversion des données de la base de données pour l'affichage}
+        Les données sont ensuite affichées dans un graphique montrant l'historique des mesures.
+        \vspace{0.5cm}
+        \begin{lstlisting}[style=javascript, caption={Code Javascript de transformation des données de la base de données pour l'affichage dans les graphiques de l'interface utilisateur}]
+    // Récupérer les résultats de la requête MySQL
+    let data = msg.payload;
+
+    // Créer un tableau pour stocker les résultats formatés
+    let formattedData = [];
+
+    // Parcourir chaque ligne de données
+    data.forEach(row => {
+        // Chaque ligne a une valeur et un timestamp
+        let point = {
+            "x": new Date(row.timestamp).getTime(),  // Convertir le timestamp en millisecondes
+            "y": row.valeur                    // La valeur associée
+        };
+        
+        // Ajouter le point au tableau formaté
+        formattedData.push(point);
+    });
+
+    // Envoyer les données formatées vers le graphique
+    msg.payload = [{
+        "series": ["Valeurs"],
+        "data": [formattedData],
+        "labels": ["Timestamp"]
+    }];
+
+    return msg;
+        \end{lstlisting}
+        \vspace{0.5cm}
+Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d'une requête MySQL pour les adapter à un graphique.\newline Il extrait les données de `msg.payload` et les reformate en objets avec des timestamps convertis en millisecondes et des valeurs associées.\newline Ces objets sont stockés dans un tableau `formattedData`.\newline Ensuite, les données formatées sont structurées dans `msg.payload` avec des séries, des données et des labels, puis renvoyées pour être utilisées par un nœud de visualisation graphique.
+        
+        \newpage
+        \subsubsection{CSS Custom}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/node_css.png} 
+            \caption{Noeud CSS permettant de changer l'apparence de l'interface utilisateur}
+            \label{fig:css}
+        \end{figure}
+         
+        \begin{lstlisting}[style=css, caption={Code CSS custom de l'interface utilisateur}]
+<style>
+    // Fond principal avec un dégradé bleu foncé
+    body {
+        background: -webkit-linear-gradient(
+            55deg,
+            #002B5B 0%, // Bleu foncé
+            #00448A 50%, // Bleu moins foncé
+            #001F3F 100% // Bleu clair
+        );
     }
-    
-    ' Boucle qui itère sur tous les fichiers du disque 
-    Loop Files Dir_Path "\*.*", "FR"
-    {
-        FileName := A_LoopFileName
-        FilePath := A_LoopFilePath
-        Time := A_LoopFileTimeModified
-        if ( Time < Date_new ) {
-            FileDelete FilePath
-            Line := FilePath " removed at " ;
-            FormatTime(Current_Date, "yyyy-MM-dd H:mm") "`n"
 
-            FileAppend(Line, Output_file)
-        }
+    // Barre supérieure
+    body.nr-dashboard-theme md-toolbar,
+    body.nr-dashboard-theme md-content md-card {
+        background-color: transparent !important; // Fond transparent
+        color: #FFFFFF !important; // Texte en blanc
     }
-    Sleep(Wait)
+
+    // Menu de gauche
+    // Barre latérale
+    body.nr-dashboard-theme md-sidenav {
+        color: white !important; // Texte en blanc
+        background-color: rgba(0,0,0,0) !important; // Fond transparent
+    }
+    // Survol de la sélection
+    a.md-no-style, button.md-no-style {
+        border-radius: 10px !important; // Coins arrondis
+    }
+    // Élément sélectionné
+    .nr-menu-item-active div button {
+        border-right: 4px solid rgb(41, 98, 255) !important; // Bordure droite bleue
+    }
+    // Liste
+    body.nr-dashboard-theme md-sidenav div.md-list-item-inner {
+        color: white !important; // Texte en blanc
+        background-color: rgba(40,85,165,1) !important; // Fond bleu
+        border-radius: 10px !important; // Coins arrondis
+    }
+
+    // Groupes
+    ui-card-panel {
+        background-color: rgba(255,255,255,0.1) !important; // Fond semi-transparent blanc
+        border-radius: 10px !important; // Coins arrondis
+    }
+    .nr-dashboard-theme ui-card-panel {
+        border: none !important; // Pas de bordure
+    }
+    // Noms des groupes
+    .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {
+        color: rgba(255, 255, 255, 0.5) !important; // Texte blanc semi-transparent
+    }
+
+    // Boutons
+    .nr-dashboard-theme .nr-dashboard-button .md-button {
+        background-color: rgba(255,255,255,.1) !important; // Fond semi-transparent blanc
+    }
+    .md-button {
+        border-radius: 10px !important; // Coins arrondis
+    }
+
+    // Menu déroulant
+    .nr-dashboard-theme md-select-menu {
+        background-color: rgba(40,85,165,1) !important; // Fond bleu
+    }
+    .nr-dashboard-theme md-select-menu, .nr-dashboard-theme md-select-menu md-option {
+        background-color: transparent !important; // Fond transparent
+    }
+    .nr-dashboard-theme .md-select-menu-container {
+        border-radius: 10px !important; // Coins arrondis
+        border: none !important; // Pas de bordure
+    }
+    .nr-dashboard-theme md-select-menu md-option[selected] {
+        color: white !important; // Texte en blanc
+        background-color: #1a3566 !important; // Fond bleu foncé
+    }
+
+    // Modèle
+    md-card>img, md-card>md-card-header img, md-card md-card-title-media img {
+        border-radius: 10px !important; // Coins arrondis
+    }
+
+    // Fond du texte du sélecteur de couleur
+    .nr-dashboard-theme .color-picker-input-wrapper > input {
+        color: white !important; // Texte en blanc
+        background-color: transparent !important; // Fond transparent
+    }
+</style>
+        \end{lstlisting}
+        \newpage
+        \subsubsection{Flow 2 :}
+        \vspace{0.5cm}
+        Le flow 2 est en charge de la souscription au broker MQTT et de l'affichage en temps réel des données dans l'interface utilisateur.
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/dashboard_flow2.png} 
+            \caption{Affichage en temps réel des données}
+            \label{fig:flow2}
+        \end{figure}
+        
+        \subsubsection{Authentification :}
+        \vspace{0.5cm}
+        L'accès à la page web d'administration est protégé par mot de passe permettant de sécuriser l'accès.
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/dashboard_auth.png} 
+            \caption{Accès à la console d'administration et de visualisation protégé par mot de passe}
+            \label{fig:node_auth}
+        \end{figure}
+
+        \newpage
+        \subsubsection{Interface de visualisation des données :}
+        Les données stockées dans la base de données sont accessibles depuis l'onglet Charts.
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/dashboard_data.png}
+            \caption{Interface utilisateur de visualisation de l'Historique des données des capteurs}
+            \label{fig:dashboard_data}
+        \end{figure}
+        \vspace{0.5cm}
+
+        Les données en temps réel sont récupérées depuis mosquitto en souscrivant au topic correspondant au capteur et affiche les données dans un graphique.
+        \vspace{0.5cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/dashboard_rt.png}
+            \caption{Interface utilisateur de visualisation des données en temps réel}
+            \label{fig:dashboard_rt}
+        \end{figure}
+        
+        \newpage
+        \subsection{Script de transfert des données depuis MQTT vers MariaDB}
+        \vspace{0.5cm}
+        Ce script est en charge du transfert des données depuis MQTT vers la base de données MariaDB. \newline 
+        Une instance du script est lancée par capteur.\newline
+        Ce script fonctionne sur une base d'interruptions, chaque fois que le broker MQTT publie une donnée une interruption est générée et la donnée est envoyé dans la base.
+        \vspace{0.5cm}
+        \begin{lstlisting}[style=C, caption={Vérification de la bonne utilisation du script}]
+if(argc < 8){ // Usage
+    printf("Usage: ./mqtt_to_bdd.elf hôte port topic utilisateur_sql mdp_bdd base_sql nom_capteur\n");
+    return 1;
 }
-\end{lstlisting}
+        \end{lstlisting}
+        \begin{lstlisting}[style=C, caption={Initialisation de l'instance MariaDB et connexion à la BDD}]
+conn = mysql_init(NULL); // Initialise l'instance mariadb
+
+if (conn == NULL) {
+    fprintf(stderr, "Erreur d'initialisation de MySQL: %s\n", mysql_error(conn));
+    exit(1);
+} else printf("SQL instance initiated\n");
+
+if (mysql_real_connect(conn, "127.0.0.1", argv[4] , argv[5], argv[6], 3306, NULL, 0) == NULL) { // Connecte à la base de données
+    fprintf(stderr, "Erreur de connexion à la base de données: %s\n", mysql_error(conn));
+    mysql_close(conn);
+    exit(1);
+}else printf("Connection to the database succesful\n");
+        \end{lstlisting}
+
+        \begin{lstlisting}[style=C, caption={Allocation des ressources MQTT et création de l'instance}]
+if(mosquitto_lib_init() != MOSQ_ERR_SUCCESS){ // Alloue les ressources requises par la libraire MQTT
+    printf("Error while init lib\n");
+    exit(1);
+} 
+
+void *user_data = NULL;
+struct mosquitto *mqtt_handle = mosquitto_new(argv[3], 0, user_data); // Crée une nouvelle instance MQTT
+if(mqtt_handle == NULL){
+    printf("Error while creating new instance of mosquitto\n");
+    cleanup(conn, mqtt_handle);
+    exit(1);
+} 
+        \end{lstlisting}
 
         \newpage
-        \subsection{Formation des utilisateurs}
+        \begin{lstlisting}[style=C, caption={Connexion au broker et souscription au topic}]
+if(mosquitto_connect(mqtt_handle, argv[1], atoi(argv[2]), 10) != MOSQ_ERR_SUCCESS){ // Connecte au broker MQTT
+    printf("Error while connecting to mqtt broker\n");
+    cleanup(conn, mqtt_handle);
+    exit(1);
+} else printf("Connection to the broker successful\n");
+
+int err = 0;
+while((err = mosquitto_subscribe(mqtt_handle, NULL, argv[3], 1) != MOSQ_ERR_SUCCESS)){ // Souscrit au topic passé en argument du programme
+    printf("Error while subscribing :%d\nRetrying...", err);
+    sleep(1);
+}
+printf("Subscribing to topic %s succesful\n", argv[3]);
+
+err = mosquitto_loop_forever(mqtt_handle, -1, 1);
+if(err != MOSQ_ERR_SUCCESS){
+    printf("Error while creating the mosquitto loop : %d\n", err);
+    cleanup(conn, mqtt_handle);
+    exit(1);
+}
+        \end{lstlisting}
+
+        \begin{lstlisting}[style=C, caption={MQTT Callback}]
+void mqtt_callback(struct mosquitto *mqtt, void *user_data, const struct mosquitto_message *message){
+     if (message->payloadlen) {
+        // Log sur le terminal des données reçues
+        printf("Message reçu %s: %s\n", message->topic, (char *)message->payload);
+        char query[512];
+        // Insertion des données dans la base de données
+        snprintf(query, 256, "INSERT INTO %s (valeur, nom_capteur) VALUES ('%s', '%s')", arg, (char *)message->payload, (char *)message->topic);
+        // Log de la Query dans le terminal
+        printf("Query: %s\n", query);
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Erreur lors de l'exécution de la requête: %s\n", mysql_error(conn));
+        }
+    } else {
+        // Si le message est vide alors log dans le terminal
+        printf("Message reçu %s (message vide)\n", message->topic);
+    }
+}
+        \end{lstlisting}
+
+        \begin{lstlisting}[style=C, caption={Enregistrement de la fonction callback}]
+mosquitto_message_callback_set(mqtt_handle, mqtt_callback);
+        \end{lstlisting}
+
+        \subsection{MariaDB}
         \vspace{0.5cm}
-        Formation des utilisateurs aux technologies mises en place au sein de l'entreprise :
-        \begin{itemize}
-            \item utilisation de la console Ivanti pour la gestion du parc informatique,
-            \item configuration des sauvegardes Veeam,
-            \item utilisation du serveur SFTP pour le transfert sécurisé de fichiers par le réseau.
-        \end{itemize}
+        Chaque capteur a  sa table associée cf Figure \ref{fig:mariadb_tables} contenant un identifiant unique (id), le nom du capteur, les valeurs mesurées ainsi qu'un timestamp (horodatage) permettant de situer la mesure dans le temps cf Figure \ref{fig:mariadb_champs}.
         \vspace{0.5cm}
-        \subsection{Projet E6}
-        \vspace{0.5cm}
-        Le projet de fin d'études E6 est réalisé en 200 heures au sein de l'entreprise (50h de gestion de projet + 150h de mise en place).
-        Ce projet permet de mettre en application des compétences clefs acquises durant les périodes de formation telles que :
-        \begin{itemize}
-            \item conteneurisation de services par le biais de conteneurs OCI,
-            \item gestion des conteneurs via Kubernetes,
-            \item création de pages web à l'aide de Node Red,
-            \item mise en place et gestion d'une base de données MariaDB,
-            \item programmation embarquée (microcontrôleur ESP32) + programmation système (script de récupération de données),
-            \item versionning à l'aide de Git + Github,
-            \item gestion des accès (Authelia),
-            \item sécurisation réseau (UFW).
-        \end{itemize}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=200pt]{../Images/bdd_tables.png} 
+            \caption{Tables contenant les données des capteurs}
+            \label{fig:mariadb_tables}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=200pt]{../Images/bdd_data.png} 
+            \caption{Tables contenant les données des capteurs}
+            \label{fig:mariadb_champs}
+        \end{figure}
+
         \newpage
-        \section{Conclusion}
+        \subsubsection{Requête SQL de création de la table d'un capteur}
+        \begin{lstlisting}[style=sql, caption={Requête SQL de création de la table du capteur 1}]
+CREATE TABLE `projet-db`.`capteur1` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`nom_capteur` VARCHAR(45) NOT NULL,
+`valeur` DECIMAL(10, 2),
+`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`)
+);
+        \end{lstlisting}
+        \vspace{0.5cm}
+
+        Cette requête SQL crée une table nommée \texttt{capteur1} dans la base de données \texttt{projet-db}.\newline La table est conçue pour stocker des informations relatives à un capteur.\newline Elle contient quatre colonnes : \texttt{id}, \texttt{nom\_capteur}, \texttt{valeur}, et \texttt{timestamp}.\newline La colonne \texttt{id} est définie comme une clé primaire avec auto-incrémentation, assurant un identifiant unique pour chaque entrée.\newline \texttt{nom\_capteur} est une chaîne de caractères de 45 caractères maximum et ne peut pas être nulle, représentant le nom du capteur.\newline \texttt{valeur} est un nombre décimal avec une précision de 10 chiffres, dont 2 décimales, pour stocker les mesures du capteur.\newline Enfin, \texttt{timestamp} enregistre automatiquement la date et l'heure de création de chaque entrée, utilisant par défaut l'heure actuelle.\newline Cette structure permet de suivre et d'enregistrer efficacement les données des capteurs au fil du temps.
+
+        \newpage
+        \subsection{Broker MQTT}
+        \subsubsection{Récupération de l'image Eclipse}
+        Le conteneur OCI du broker MQTT est basé sur l'image officielle de Eclipse avec une configuration personnalisée.
+        \begin{lstlisting}[style=bash, caption={Récupération du conteneur officiel eclipse-mosquitto}]
+podman pull docker.io/eclipse-mosquitto
+        \end{lstlisting}
+
+        \subsubsection{Premier lancement du conteneur}
+        Le conteneur est lancé une première fois avec une redirection des ports 1883 et 9001 vers l'hôte. Ici, mqtt est le nom de l'image après modification de la configuration.
+        \begin{lstlisting}[style=bash, caption={Premier lancement du conteneur mqtt avec les bons paramètres}]
+podman run -it --name mosquitto-projet -p 1883:1883 -p 9001:9001 mqtt -config mosquitto -c /mosquitto/config/mosquitto.conf
+        \end{lstlisting}
+
+        \subsubsection{Lancement du conteneur après arrêt}
+        Pour lancer le conteneur après un arrêt.
+        \begin{lstlisting}[style=bash, caption={Lancement du conteneur après un arrêt}]
+podman start mosquitto-projet
+        \end{lstlisting}
+
+        \subsubsection{Configuration Broker MQTT}
+        \begin{lstlisting}[style=bash, caption={Configuration du broker MQTT}]
+listener 1883
+listener 9001
+protocol websockets
+password_file /mosquitto/config/passwd.txt
+        \end{lstlisting}
+        \newpage
+
+        \subsection{Lancement automatisé des conteneurs et scripts}
+        Les conteneurs et scripts utilisés dans ce système sont lancés de manière automatisée par une service managé par systemctl. Cela permet  une automatisation du lancement et une journalisation des événements.
+        \subsubsection{Service de lancement des conteneurs}
+        \begin{lstlisting}[style=bash, caption={Fichier de configuration du service systemctl du lancement des conteneurs}]
+[Unit]
+Description=Script de lancement des conteneurs
+After=network.target
+[Service]
+ExecStart=/home/projet/scripts/start_scripts.sh
+Restart=always
+[Install]
+WantedBy=default.target
+        \end{lstlisting}
+
+        \subsubsection{Script de lancement des conteneurs}
+        \begin{lstlisting}[style=bash, caption={Script de lancement des conteneurs}]
+#!/bin/bash
+sleep 10
+podman start mariadb
+sleep 5
+podman start mqtt
+sleep 5
+podman start dashboard
+while true
+do
+        sleep 100
+done
+        \end{lstlisting}
+
+        \subsubsection{Service de lancement des scripts de transfert de données}
+        \begin{lstlisting}[style=bash, caption={Service de lancement du script de transfert des données}]
+[Unit]
+Description=Service de lancement des scripts de transfert des données depuis MQTT vers la base de données MariaDB
+After=start_script.service
+[Service]
+ExecStart=/home/projet/scripts/main.elf localhost 1883 capteur1 projet projet projet-db capteur1
+Restart=always
+[Install]
+WantedBy=default.target
+        \end{lstlisting}
+        \newpage
+        \subsection{Firmware ESP32}
+
+        \subsubsection{Matériel Utilisé :}
+        Microcontrôleur utilisé : ESP32\newline
+        Carte de développement ESP32 WT32-ETH01\newline
+        Convertisseur UART vers USB: CH340G\newline
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=200pt]{../Images/ESP32.png} 
+            \caption{ESP32 WT32-ETH01}
+            \label{fig:ESP32}
+        \end{figure}
+        \subsubsection{Activation de la puce PHY}
+        \begin{lstlisting}[style=C, caption={Activation de la puce PHY}]
+gpio_reset_pin(16); // Reset l'état du pin enable de puce PHY
+gpio_set_direction(16, GPIO_MODE_OUTPUT); 
+
+gpio_set_level(16, 1); // Applique une tension de 3.3v sur le pin Enable de la puce PHY pour activer l'horloge de 50MHz
+        \end{lstlisting}
+
+        La puce PHY (Physical Layer) est un composant essentiel dans les systèmes de communication numérique, servant d'interface entre les couches physiques d'un réseau et les couches de liaison de données.\newline
+        Elle est responsable de la conversion des données numériques en signaux physiques qui peuvent être transmis sur un support de communication, tel qu'un câble ou une onde radio, et inversement.\newline
+        La puce PHY gère également des fonctions telles que la modulation, la démodulation, la synchronisation et la correction d'erreurs, assurant ainsi une transmission fiable et efficace des données.\newline
+
+        \newpage
+        \subsubsection{Configuration de la MAC}
+        \begin{lstlisting}[style=C, caption={Activation de la puce PHY}]
+  eth_esp32_emac_config_t emac_config = ETH_ESP32_EMAC_DEFAULT_CONFIG(); // Configuration ethernet par défaut
+  emac_config.clock_config.rmii.clock_mode = EMAC_CLK_EXT_IN; // Utilise l'horloge fournie par la puce PHY
+  emac_config.clock_config.rmii.clock_gpio = EMAC_CLK_IN_GPIO; 
+
+  eth_mac_config_t mac_conf = ETH_MAC_DEFAULT_CONFIG(); // Configuration MAC par défaut
+  mac_conf.sw_reset_timeout_ms = 1000;
+
+  esp_eth_mac_t *mac = esp_eth_mac_new_esp32(&emac_config, &mac_conf); // Nouvelle instance MAC
+  ESP_LOGI("MAC :", "esp_eth_mac_new_esp32 done"); // Log
+  eth_phy_config_t phy_config = ETH_PHY_DEFAULT_CONFIG(); // Configuration de la puce PHY par défaut
+  phy_config.phy_addr = 1; // Adresse I2C de la puce PHY
+  phy_config.reset_gpio_num = -1; // Pin reset de la puce PHY non relié
+
+  esp_eth_phy_t *phy = esp_eth_phy_new_lan87xx(&phy_config); // Register type of PHY Chip
+  if (phy != NULL){
+      ESP_LOGI("PHY :", "esp_eth_phy_new_lan87xx done");
+  } else {
+      ESP_LOGE("PHY :", "esp_mac_phy_error");
+  }
+  esp_eth_config_t eth_config = ETH_DEFAULT_CONFIG(mac, phy); // Default ETH Config
+        \end{lstlisting}
+
+
+        Ce code configure la couche MAC (Media Access Control) d'un ESP32 pour une interface Ethernet.\newline
+        Il commence par définir une configuration par défaut pour l'EMAC (Ethernet MAC) de l'ESP32, en spécifiant l'utilisation d'une horloge externe pour le mode RMII (Reduced Media Independent Interface) et en assignant un GPIO pour l'horloge.\newline
+        Ensuite, il initialise la configuration MAC avec des paramètres par défaut et un temps de réinitialisation logicielle de 1000 ms.\newline
+        La fonction \texttt{esp\_eth\_mac\_new\_esp32} est utilisée pour créer une instance de la couche MAC avec ses configurations.\newline
+        Le code enregistre également une configuration par défaut pour la puce PHY (Physical Layer), en définissant son adresse I2C et en désactivant la réinitialisation matérielle.\newline
+        Enfin, il crée une nouvelle instance de la configuration Ethernet en combinant les configurations MAC et PHY, permettant ainsi à l'ESP32 de communiquer via Ethernet.
+
+        \newpage
+        \subsubsection{Installation du driver Ethernet}
+        \begin{lstlisting}[style=C, caption={Installation du driver ethernet}]
+ESP_ERROR_CHECK(esp_eth_driver_install(&eth_config, &eth_handle)); // Install the Ethernet Driver
+ESP_LOGI("Driver :", "esp_eth_driver_install done");
+        \end{lstlisting}
+        \vspace{0.5cm}
+        Ce code utilise la fonction \texttt{esp\_eth\_driver\_install} pour installer et initialiser le pilote Ethernet sur un ESP32, en utilisant la configuration Ethernet définie précédemment.\newline
+        La fonction \texttt{ESP\_ERROR\_CHECK} est utilisée pour vérifier que l'installation s'est déroulée sans erreur.\newline
+        Une fois l'installation réussie, un message de log est enregistré pour indiquer que le pilote Ethernet a été correctement installé.\newline 
+        Cela permet de s'assurer que le périphérique est prêt à gérer les communications Ethernet.
+
+        \vspace{0.5cm}
+        \subsubsection{Démarrage de la carte Ethernet}
+        \begin{lstlisting}[style=C, caption={Démarrage de la carte Ethernet}]
+ESP_ERROR_CHECK(esp_eth_start(eth_handle)); // Start Ethernet interface
+        \end{lstlisting}
+
+        \newpage
+        \subsubsection{Event Handler du driver Ethernet}
+        \begin{lstlisting}[style=C, caption={Event Handler du driver Ethernet}]
+  static void eth_event_handler(void *arg, esp_event_base_t event_base,
+                                int32_t event_id, void *event_data)
+  {
+      uint8_t mac_addr[6] = {0};
+
+      switch (event_id) {
+      case ETHERNET_EVENT_CONNECTED:
+          esp_eth_ioctl(eth_handle, ETH_CMD_G_MAC_ADDR, mac_addr);
+          ESP_LOGI(TAG, "Ethernet Link Up");
+          ESP_LOGI(TAG, "Ethernet HW Addr %02x:%02x:%02x:%02x:%02x:%02x", mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
+          break;
+      case ETHERNET_EVENT_DISCONNECTED:
+          ESP_LOGI(TAG, "Ethernet Link Down");
+          break;
+      case ETHERNET_EVENT_START:
+          ESP_LOGI(TAG, "Ethernet Started");
+          break;
+      case ETHERNET_EVENT_STOP:
+          ESP_LOGI(TAG, "Ethernet Stopped");
+          break;
+      default:
+          break;
+      }
+  }
+        \end{lstlisting}
+        \vspace{0.5cm}
+
+        Un gestionnaire d'événements Ethernet pour ESP32 utilisant ESP-IDF est une fonction qui gère divers événements liés à la connectivité Ethernet.\newline
+        Dans le code fourni, \texttt{eth\_event\_handler} est appelé chaque fois qu'un événement Ethernet se produit, comme la connexion, la déconnexion, le démarrage ou l'arrêt de l'interface Ethernet.\newline
+        Par exemple, lorsque l'ESP32 se connecte à un réseau Ethernet \newline (\texttt{ETHERNET\_EVENT\_CONNECTED}), il récupère et affiche l'adresse MAC de l'interface.\newline
+        En cas de déconnexion (\texttt{ETHERNET\_EVENT\_DISCONNECTED}), il enregistre un message indiquant que le lien Ethernet est perdu.\newline
+        Ce gestionnaire permet de surveiller et de réagir aux changements d'état de la connexion Ethernet, facilitant ainsi la gestion des communications réseau sur l'ESP32.
+
+        \newpage
+        \subsubsection{Configuration de la pile IP Netif}
+        \begin{lstlisting}[style=C, caption={Configuration de la pile IP Netif}]
+    ESP_ERROR_CHECK(esp_netif_init()); // Initialize Lwip TCP/IP Stack
+    ESP_LOGI("NETIF: ", "Netif initialized");
+
+    esp_netif_config_t netif_cfg = ESP_NETIF_DEFAULT_ETH(); // Netif config
+    esp_netif_t *eth_netif = esp_netif_new(&netif_cfg); // Create a new TCP/IP stack
+    if(eth_netif != NULL){
+        ESP_LOGI("NETIF:", "Netif new created");
+    } else {
+        ESP_LOGE("NETIF:", "Error while creating Netif");
+    }
+        \end{lstlisting}
+        \vspace{0.5cm}
+
+        La configuration de la pile netif pour un ESP32 utilisant ESP-IDF commence par l'initialisation de la pile TCP/IP LwIP avec \texttt{esp\_netif\_init()}.\newline Cette étape est cruciale pour préparer le système à gérer les communications réseau.\newline Ensuite, une configuration par défaut pour l'interface Ethernet est définie avec \texttt{ESP\_NETIF\_DEFAULT\_ETH()}, qui est stockée dans une structure \newline \texttt{esp\_netif\_config\_t}.\newline Une nouvelle instance de la pile TCP/IP est alors créée avec \texttt{esp\_netif\_new()}, en utilisant la configuration précédemment définie.\newline Si la création de cette instance est réussie, un message de confirmation est enregistré, indiquant que la nouvelle interface netif a été créée.\newline En cas d'échec, un message d'erreur est enregistré, permettant ainsi de diagnostiquer les problèmes potentiels lors de la configuration de la pile réseau.
+
+
+        \subsubsection{Liaison du driver Ethernet et de la pile IP}
+        \begin{lstlisting}[style=C, caption={Liaison du driver Ethernet et de la pile IP}]
+esp_netif_attach(eth_netif, esp_eth_new_netif_glue(eth_handle)); // attach Ethernet driver to TCP/IP stack
+        \end{lstlisting}
+
+        \vspace{0.5cm}
+        Ce code est utilisé dans le contexte de l'ESP32 pour attacher le pilote Ethernet à la pile TCP/IP, permettant ainsi la communication réseau.\newline La fonction \texttt{esp\_netif\_attach} est appelée avec deux arguments : \texttt{eth\_netif}, qui représente l'interface réseau précédemment créée, et \newline \texttt{esp\_eth\_new\_netif\_glue(eth\_handle)}, qui crée une "colle" ou un adaptateur entre le pilote Ethernet et l'interface réseau.\newline Cette étape est cruciale car elle lie le matériel Ethernet (représenté par \texttt{eth\_handle}) à la pile réseau logicielle, permettant à l'ESP32 de envoyer et recevoir des données via Ethernet.\newline En effectuant cette attache, l'ESP32 est prêt à participer à des communications réseau, comme l'envoi et la réception de paquets de données.
+
+        \newpage
+        \subsubsection{Configuration IP de la carte}
+        \begin{lstlisting}[style=C, caption={Configuration IP de la carte}]
+ESP_ERROR_CHECK(esp_netif_dhcpc_stop(eth_netif)); // Stop DHCP service to use Static IP conf
+
+esp_netif_ip_info_t ip_info;
+ip_info.ip.addr    = inet_addr("192.168.1.2"); // IP Configuration of the esp32
+ip_info.gw.addr    = inet_addr("192.168.1.1");
+ip_info.netmask.addr = inet_addr("255.255.255.0");
+
+ESP_ERROR_CHECK(esp_netif_set_ip_info(eth_netif, &ip_info));
+        \end{lstlisting}
+
+        \vspace{0.5cm}
+        Ce code configure une adresse IP statique pour l'ESP32, remplaçant l'utilisation du protocole DHCP pour obtenir automatiquement une adresse IP.\newline Tout d'abord, le service DHCP est arrêté avec \texttt{esp\_netif\_dhcpc\_stop(eth\_netif)} pour permettre la configuration manuelle de l'adresse IP.\newline Ensuite, une structure \texttt{esp\_netif\_ip\_info\_t} est utilisée pour définir les informations IP.\newline L'adresse IP de l'ESP32 est définie sur \texttt{192.168.1.2}, la passerelle par défaut sur \texttt{192.168.1.1}, et le masque de sous-réseau sur \texttt{255.255.255.0}.\newline Ces adresses sont converties du format texte en format binaire à l'aide de \texttt{inet\_addr}.\newline Enfin, la configuration IP est appliquée à l'interface réseau avec \newline \texttt{esp\_netif\_set\_ip\_info(eth\_netif, \&ip\_info)}, ce qui permet à l'ESP32 de communiquer sur le réseau local avec l'adresse IP statique spécifiée.\newline
+
+        \newpage
+        \subsubsection{Event Handler de la pile IP Netif}
+        \begin{lstlisting}[style=C, caption={Event Handler de la pile IP Netif}]
+static void got_ip_event_handler(void *arg, esp_event_base_t event_base,
+                                int32_t event_id, void *event_data)
+{
+    ip_event_got_ip_t *event = (ip_event_got_ip_t *) event_data; // Typecast of event_data to ip_event_got_ip type
+    const esp_netif_ip_info_t *ip_info = &event->ip_info; // Extract IP info
+
+    ESP_LOGI(TAG, "Ethernet Got IP Address");
+    ESP_LOGI(TAG, "ETHIP:" IPSTR, IP2STR(&ip_info->ip));
+    ESP_LOGI(TAG, "ETHMASK:" IPSTR, IP2STR(&ip_info->netmask));
+    ESP_LOGI(TAG, "ETHGW:" IPSTR, IP2STR(&ip_info->gw));
+}
+      \end{lstlisting}
+      \vspace{0.5cm}
+      Ce code définit un gestionnaire d'événements pour l'ESP32 qui est appelé lorsqu'une adresse IP est attribuée à l'interface réseau.\newline La fonction \texttt{got\_ip\_event\_handler} est déclenchée en réponse à un événement spécifique indiquant que l'ESP32 a obtenu une adresse IP.\newline À l'intérieur de cette fonction, \texttt{event\_data} est converti en un pointeur de type \texttt{ip\_event\_got\_ip\_t}, ce qui permet d'accéder aux détails de l'événement.\newline Ensuite, les informations IP contenues dans cet événement sont extraites et stockées dans une structure \texttt{esp\_netif\_ip\_info\_t}.\newline Bien que le code soit incomplet, il est généralement utilisé pour afficher ou utiliser l'adresse IP attribuée, la passerelle et le masque de sous-réseau, permettant ainsi à l'ESP32 de communiquer sur le réseau avec les paramètres IP appropriés.
+
+      \newpage
+      \subsubsection{Configuration MQTT et démarrage du client}
+      \begin{lstlisting}[style=C, caption={Event Handler de la pile IP Netif}]
+esp_mqtt_client_config_t mqtt_cfg = { 
+    .broker.address.hostname = "192.168.1.1",
+    .broker.address.port = 9001,
+    .broker.address.transport = MQTT_TRANSPORT_OVER_WS,
+    .session.keepalive = 120, // Increase keepalive interval
+    .credentials.username = NULL,
+    .credentials.authentication.password = NULL,
+    .credentials.client_id = "Capteur 1"
+};
+esp_mqtt_client_handle_t mqtt_handle = esp_mqtt_client_init(&mqtt_cfg); // Create a handle to mqtt client
+
+if(mqtt_handle == NULL){
+    ESP_LOGE("MQTT", "Error when init mqtt");
+} else {
+    ESP_LOGI("MQTT :", "mqtt init done");
+}
+ESP_ERROR_CHECK(esp_mqtt_client_start(mqtt_handle)); // Start the mqtt client
+
+      \end{lstlisting}
+      Ce code configure un client MQTT pour l'ESP32 afin de se connecter à un broker MQTT.\newline La structure \texttt{esp\_mqtt\_client\_config\_t} est utilisée pour définir les paramètres de configuration du client MQTT.\newline Le broker MQTT est spécifié avec l'adresse IP \texttt{192.168.1.1} et le port \texttt{9001}, utilisant le transport WebSocket (\texttt{MQTT\_TRANSPORT\_OVER\_WS}).\newline L'intervalle de keepalive est défini à 120 secondes pour maintenir la connexion active.\newline Aucun nom d'utilisateur ni mot de passe n'est configuré, mais un identifiant client, "Capteur 1", est attribué pour identifier le client MQTT.\newline Ensuite, \texttt{esp\_mqtt\_client\_init} est appelé avec cette configuration pour initialiser le client MQTT et obtenir un handle.\newline Si l'initialisation échoue, un message d'erreur est enregistré ; sinon, un message de confirmation indique que l'initialisation du client MQTT a réussi.
+      \newpage
+
+      \subsubsection{Event Handler MQTT}
+      \begin{lstlisting}[style=C, caption={Event Handler de la pile IP Netif}]
+esp_mqtt_client_register_event(mqtt_handle, ESP_EVENT_ANY_ID, mqtt_event_handler, mqtt_handle); // Register mqtt event handler
+
+void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
+{
+    ESP_LOGD(TAG, "Event dispatched from event loop base=%s, event_id=%" PRIi32 "", base, event_id);
+    esp_mqtt_event_handle_t event = event_data;
+    switch ((esp_mqtt_event_id_t)event_id) {
+    case MQTT_EVENT_CONNECTED:
+        ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
+        CONNECTED = 1;
+        break;
+    case MQTT_EVENT_DISCONNECTED:
+        ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
+        CONNECTED = 0;
+        break;
+
+    case MQTT_EVENT_PUBLISHED:
+        ESP_LOGI(TAG, "MQTT_EVENT_PUBLISHED, msg_id=%d", event->msg_id);
+        break;
+    case MQTT_EVENT_DATA:
+        ESP_LOGI(TAG, "MQTT_EVENT_DATA");
+        printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
+        printf("DATA=%.*s\r\n", event->data_len, event->data);
+        break;
+    case MQTT_EVENT_ERROR:
+        ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
+        if (event->error_handle->error_type == MQTT_ERROR_TYPE_TCP_TRANSPORT) {
+            ESP_LOGI(TAG, "Last errno string (%s)", strerror(event->error_handle->esp_transport_sock_errno));
+        }
+        break;
+    default:
+        ESP_LOGI(TAG, "Other event id:%d", event->event_id);
+        break;
+    }
+}
+      \end{lstlisting}
+
+      La configuration d'un gestionnaire d'événements pour un client MQTT sur l'ESP32 se fait en enregistrant une fonction de rappel avec \texttt{esp\_mqtt\_client\_register\_event}.\newline Cette fonction, nommée \texttt{mqtt\_event\_handler}, est appelée pour gérer divers événements MQTT.\newline Elle est configurée pour répondre à tous les types d'événements MQTT.\newline
+
+Dans le gestionnaire d'événements, différents cas sont traités en fonction de l'\texttt{event\_id}.\newline Par exemple, lors de la connexion au broker MQTT, un message est enregistré et une variable \texttt{CONNECTED} est mise à jour.\newline En cas de déconnexion, cette variable est réinitialisée.\newline D'autres événements, comme la publication de messages ou la réception de données, sont également gérés avec des messages de journalisation appropriés.\newline En cas d'erreur, des détails supplémentaires sont enregistrés pour faciliter le diagnostic.\newline Ce gestionnaire permet de surveiller et de réagir efficacement aux différents états et événements du client MQTT.
+
+      \subsection{Capteur MQ135}
+
+      Le module MQ Sensor comporte un capteur MQ135 qui permet de mesurer la qualité de l'air intérieur, il permet de détecter le Benzene, l'Ammoniaque, la fumée, le sulfure et la pollution atmosphérique.\newline
+      Ce module a une sortie analogique permettant de mesurer la qualité de l'air et une sortie analogique qui est déclenchée quand un seuil est dépassé.
+      \begin{figure}[H]
+          \centering
+          \includegraphics[width=200pt]{../Images/mq135.jpg} 
+          \caption{Capteur MQ135}
+          \label{fig:MQ135}
+      \end{figure}
+
+      \subsubsection{Gaz détectés :}
+      \begin{itemize}
+          \item Ammoniaque (NH3)
+          \item Sulfure d'hydrogène (H2S)
+          \item Dioxyde de carbone (CO2)
+          \item Benzène (C6H6)
+          \item Alcool (C2H5OH)
+          \item Dioxyde d'azote (NO2)
+          \item fumée
+      \end{itemize}
+
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+    \renewcommand{\arraystretch}{1.5} 
+    
+    {
+    \centering{
+    \begin{tabular}{|>{\raggedright\arraybackslash}C{9cm}|>{\raggedright\arraybackslash}C{4cm}|>{\raggedright\arraybackslash}C{8cm}@{\hspace{10pt}}|}
+        \hline
+        \textbf{Donnée} & \textbf{Valeur} \\
+        \hline
+        Tension d'alimentation & 5V \\
+        \hline
+        Intensité & 180mA \\
+        \hline
+        Puissance consommée & 0.9W \\
+        \hline
+        Températures de fonctionnement & -10°C à 45°C \\
+        \hline
+        Plage de mesure & 10ppm à 10000ppm \\
+        \hline
+        Tolérance & \(\pm 15\%\) \\
+        \hline
+
+    \end{tabular}}
+   }
+
+      \newpage
+      \section{Conclusion}
         Travailler au sein d'une structure aussi importante et diversifiée que Hager Group m'a offert une expérience enrichissante et formatrice. J'ai eu l'opportunité d'explorer et de mettre en pratique des compétences variées, allant de la gestion du parc informatique à la communication entre les PC de production et les automates. Cette expérience m'a permis de comprendre l'importance de l'intégration entre les technologies de l'information (IT) et les technologies opérationnelles (OT), élément indispensable au bon fonctionnement d'une entreprise industrielle.\newline
 
 L'apprentissage en milieu industriel m'a inculqué la rigueur et la précision nécessaires pour maintenir une haute disponibilité des services informatiques, essentielle pour soutenir les opérations de production. J'ai appris à travailler de manière méthodique et à anticiper les besoins et les défis potentiels, tout en assurant la sécurité et l'efficacité des systèmes.\newline
 
-L'aboutissement de cette expérience, à travers le projet E6, m'a permis de synthétiser et d'appliquer les compétences acquises tout au long de ma formation. Ce projet m'a donné l'occasion de me familiariser avec des technologies avancées telles que la conteneurisation, la gestion de conteneurs avec Kubernetes, la création de pages web avec Node Red, et la gestion de bases de données. De plus, j'ai pu explorer la programmation embarquée avec des microcontrôleurs ESP32 et le versioning avec Git et GitHub, tout en renforçant mes compétences en sécurité réseau.\newline
+L'aboutissement de cette expérience, à travers le projet E6, m'a permis de synthétiser et d'appliquer les compétences acquises tout au long de ma formation. Ce projet m'a donné l'occasion de me familiariser avec des technologies avancées telles que la conteneurisation, la gestion de conteneurs avec Kubernetes, la création de pages web avec Node-Red, et la gestion de bases de données. De plus, j'ai pu explorer la programmation embarquée avec des microcontrôleurs ESP32 et le versioning avec Git et GitHub, tout en renforçant mes compétences en sécurité réseau.\newline
 
 Cette expérience chez Hager Group s'est avérée extrêmement bénéfique, me permettant de développer des compétences techniques solides tout en acquérant une compréhension approfondie des exigences et des dynamiques d'un environnement industriel. Je suis convaincu que ces acquis seront précieux pour mon avenir professionnel et me permettront de contribuer efficacement à des projets complexes et innovants.
 \end{document}
