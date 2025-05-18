@@ -81,6 +81,27 @@
   breakatwhitespace=false,
   escapeinside={\%*}{*)}
 }
+\lstdefinestyle{python}{
+  language=python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={\%*}{*)}
+}
 \lstdefinestyle{C}{
   language=C,
   basicstyle=\ttfamily\small,
@@ -147,6 +168,27 @@
 }
 \lstdefinestyle{sql}{
     language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{teal}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{magenta},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+\lstdefinestyle{html}{
+    language=html,
     basicstyle=\ttfamily\small,
     keywordstyle=\color{teal}\bfseries,
     commentstyle=\color{green!50!black}\itshape,
@@ -994,6 +1036,110 @@ Restart=always
 [Install]
 WantedBy=default.target
         \end{lstlisting}
+        \newpage
+        \subsection{Envoie de mails}
+        L'envoi de mails d'alertes est géré par un noeud NodeRed qui appelle un script python quand un seuil de PPM est dépassé.
+        Ce script python utilise le serveur SMTP de Gmail pour la maquette et sera relié au serveur SMTP Outlook durant sa mise en place réelle.
+        \subsubsection{Script Python}
+        \begin{lstlisting}[style=python, caption={Script python d'envoie de mails}]
+import smtplib
+from email.mime.text import MIMEText
+
+sender_email = "qaihager@gmail.com"
+sender_password = "Mot de passe"
+recipient_email = "email_reception@domaine.fr"
+subject = "Alerte QAI PPM"
+html_message = MIMEText(html_content, 'html')
+html_message['Subject'] = subject
+html_message['From'] = sender_email
+html_message['To'] = recipient_email
+with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+server.login(sender_email, sender_password)
+server.sendmail(sender_email, recipient_email, html_message.as_string())
+        \end{lstlisting}
+
+        \subsubsection{Contenu du mail HTML}
+        \begin{lstlisting}[style=html, caption={Contenu du mail HTML}]
+html_content = """
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Alerte : Seuil de PPM Dépassé</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header {
+                background-color: #ff0000;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                border-radius: 5px 5px 0 0;
+            }
+            .content {
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 0 0 5px 5px;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #ff0000;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Alerte : Seuil de PPM Dépassé</h1>
+        </div>
+        <div class="content">
+            <p>Bonjour,</p>
+            <p>Nous vous informons que le seuil de concentration en parties par million (PPM) a été dépassé.</p>
+            <p><strong>Détails de l'alerte :</strong></p>
+            <ul>
+                <li><strong>Seuil dépassé :</strong> [Valeur du seuil] PPM</li>
+                <li><strong>Valeur actuelle :</strong> [Valeur actuelle] PPM</li>
+                <li><strong>Date et heure :</strong> [Date et heure de l'incident]</li>
+                <li><strong>Lieu :</strong> [Lieu de l'incident]</li>
+            </ul>
+            <p>Veuillez prendre les mesures nécessaires pour remédier à cette situation.</p>
+            <p>Pour plus d'informations, veuillez contacter notre équipe de support.</p>
+            <a href="[Lien vers plus d'informations]" class="button">Plus d'informations</a>
+            <p>Cordialement,</p>
+            <p><strong>L'équipe de surveillance</strong></p>
+        </div>
+    </body>
+    </html>
+"""
+        \end{lstlisting}
+
+        \newpage
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/script_node.png} 
+            \caption{Noeud d'appel du script d'envois de mails}
+            \label{fig:node_script}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=400pt]{../Images/node_trigger_ppm.png} 
+            \caption{Noeud de trigger d'envoi de mails}
+            \label{fig:node_trigger}
+        \end{figure}
+
+
+
         \newpage
         \subsection{Firmware ESP32}
 
