@@ -38,6 +38,8 @@
 \definecolor{keywordcolor}{rgb}{0.7,0.1,0.1} % Couleur des mots-clés
 \definecolor{commentcolor}{rgb}{0.1,0.5,0.1} % Couleur des commentaires
 
+\renewcommand{\lstlistingname}{Bloc de code} % Change "Listing" à "Bloc de Code"
+
 \lstdefinestyle{javascript}{
   language=Java,
   basicstyle=\ttfamily\small,
@@ -241,7 +243,7 @@
     \Large{\textbf{Remerciements}}
     \end{flushleft}
     \vspace{1cm}
-    Je remercie Nicolas Freyd, mon tuteur, ainsi que Christian Kuhn, mon supérieur pour m'avoir donné l'opportunité de réaliser mon BTS en alternance au sein de l'entreprise Hager.\newline \newline
+    Je remercie Nicolas Freyd, mon tuteur, ainsi que Christian Kuhn, mon responsable pour m'avoir donné l'opportunité de réaliser mon BTS en alternance au sein de l'entreprise Hager.\newline \newline
     Mes remerciements vont également à tous mes collèges qui, au travers de leur bienveillance, leur savoir-faire et leur disponibilité, ont fait en sorte que mon alternance se déroule dans les meilleures conditions.\newline \newline
     Enfin, je remercie les enseignants du Pôle Formation UIMM Alsace pour leur enseignement de qualité.\newline
     \newpage
@@ -252,7 +254,7 @@
     \section{Présentation de l'entreprise}
     \vspace{0.3cm}
     \subsection{Histoire de l'entreprise}
-    En 1955, Oswald Hager et Hermann Hager (1928-2014)créent avec leur père Peter Hager l’entreprise Hager oHG, elektrotechnische Fabrik, à Ensheim (Allemagne). À cette époque et depuis 1945, la Sarre est économiquement rattachée à la France et le marché allemand n'est pas accessible. Hager souhaite néanmoins s'implanter sur ces deux marchés.\newline
+    En 1955, Oswald Hager et Hermann Hager (1928-2014) créent avec leur père Peter Hager l’entreprise Hager oHG, elektrotechnische Fabrik, à Ensheim (Allemagne). À cette époque et depuis 1945, la Sarre est économiquement rattachée à la France et le marché allemand n'est pas accessible. Hager souhaite néanmoins s'implanter sur ces deux marchés.\newline
     \vspace{0.5cm}
     \newline
     En 1959, la famille Hager crée à Obernai, en Alsace, l’entreprise Hager Electro SA qui est la première filiale étrangère. À partir de 1966, Hager forme des installateurs électriciens de manière systématique ce qui instaure une culture de fidélisation des clients en leur fournissant des informations utiles. Le disjoncteur modulaire de Hager est breveté en Allemagne en 1968 puis en France en 1970. Dans le même temps, le premier tableau électrique en série, le « Hager-Rapid-System », fait son apparition sur le marché français. En 1973, Hager réalise un chiffre d'affaires de 43 millions de deutsche marks en Allemagne, et, en 1974, de 22 millions de francs en France.
@@ -284,7 +286,7 @@
         \caption{Localisations des sites de production HagerGroup dans le monde}
         \label{fig:hager_global}
     \end{figure}
-    \subsubsection{Site principale}
+    \subsubsection{Site principal}
     \begin{figure}[H]
         \centering
         \includegraphics[width=350pt]{../Images/maps_hager.png}
@@ -335,7 +337,7 @@
     \begin{enumerate}
         \item une équipe en charge de l'administration des réseaux industriels (IIT\footnote{Industrial Information Technology, synonyme : OT}),
         \item une équipe en charge du développement d'applications pour le groupe,
-        \item une équipe en charge de l'administration des réseaux bureautique,
+        \item une équipe en charge de l'administration des réseaux bureautiques,
         \item les relais IIT en charge de la maintenance des équipements informatiques industriels.
     \end{enumerate}
     \begin{figure}[H]
@@ -487,8 +489,8 @@
         \subsection{Gestion de projet}
         L’objectif de ce projet est de pouvoir mesurer la qualité de l’air des usines ainsi que d’envoyer des alertes si des seuils sont dépassés. 
         \newline
-        Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer les données. Il va ensuite s'authentifier et les envoyer au broker MQTT hébergé sur le serveur Linux. \newline
-Le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les afficher sur une Dashboard et envoyer des alertes si besoin.
+        Pour cela, un capteur de qualité d’air sera relié à un microcontrôleur qui va se charger de récupérer les données. Il vas ensuite s'authentifier et les envoyer au broker MQTT hébergé sur le serveur Linux. \newline
+Enfin, le serveur Linux va ensuite récupérer les informations, les stocker dans une base de données, les afficher sur une Dashboard et envoyer des alertes si besoin.
 
         \subsubsection{Diagramme de contexte :}
 Le capteur de QAI effectue des mesures à intervalle régulier, ces mesures sont transmises au microcontrôleur ESP32 qui les transmet à son tour au serveur. Le serveur traite les données, les stocke et les affiche sur une Dashboard. \newline 
@@ -520,8 +522,8 @@ La Dashboard est accessible par les utilisateurs pour visualiser les données et
         \subsubsection{Diagramme de séquence de visualisation des données :}
 
         Lorsqu’un client souhaite visualiser les données des capteurs, il va accéder à la Dashboard via un navigateur internet.\newline
-        L’URL sera convertie en adresse IP par le serveur DNS, puis le serveur Authelia se chargera de l’authentification de l’utilisateur.\newline
-        Enfin, Node-Red va récupérer les données dans la base de données MariaDB et les afficher sur le poste client.\newline
+        L’URL sera convertie en adresse IP par le serveur DNS.\newline
+        Enfin, Node-Red va identifier l'utilisateur, récupérer les données dans la base de données MariaDB et les afficher sur le poste client.\newline
 
         \vspace{1cm}
         \begin{figure}[H]
@@ -535,7 +537,7 @@ La Dashboard est accessible par les utilisateurs pour visualiser les données et
         \subsubsection{Diagramme de séquence de réception / envoi des données :}
 
         Le capteur de QAI transmet les données récoltées au microcontrôleur ESP32 qui va ensuite les publier sur le broker MQTT.
-        Le broker MQTT publie les données reçues aux clients qui ont souscrits au topic. 
+        Le broker MQTT publie les données reçues aux clients qui ont souscrit au topic. 
         Le programme C est un de ces clients et il se charge de récupérer les données et de les écrire dans la base de données.
 
         \vspace{1cm}
@@ -566,7 +568,8 @@ La Dashboard est accessible par les utilisateurs pour visualiser les données et
             \item \textbf{valeur} : Valeur mesurée.
             \item \textbf{timestamp} : Horodatage de la mesure.
         \end{itemize}
-        Chaque table stocke des données de capteurs différents avec une structure identique.
+        Chaque table stocke des données de capteurs différents avec une structure identique.\newline
+        Dans le cas de l'ajout d'un capteur, une nouvelle table devra être crée.
 
         \vspace{1cm}
         \begin{figure}[H]
@@ -591,14 +594,14 @@ La Dashboard est accessible par les utilisateurs pour visualiser les données et
             \item Node-Red : Création de l'interface de visualisation des données
             \item SSH : Connexion au serveur à distance 
             \item PostFix : Serveur mail SMTP
-            \item UFW : PareFeux
-            \item MQTT : Protocol de communication utilisé pour transmettre les données entre l'ESP32 et le serveur
+            \item UFW : PareFeu
+            \item MQTT : Protocole de communication utilisé pour transmettre les données entre l'ESP32 et le serveur
             \item SDS011 : Capteur de qualité d'air 
             \item MariaDB : Base de données 
             \item Debian : Système d'exploitation GNU/Linux
             \item Sphinx : Logiciel de documentation 
             \item Git + Github : Logiciel et serveur de versionning
-            \item Javascript + CSS
+            \item Javascript + CSS : Customisation de l'interface web NodeRed
         \end{itemize}
 
         \newpage
@@ -615,7 +618,7 @@ podman start dashboard
         \end{lstlisting}
 
         \subsubsection{Flow 1 :}
-        Le flow 1 est en charge de la connexion à la base de données et du formatage des données pour l'affichage dans l'interface utilisateur
+        Le flow 1 est en charge de la connexion à la base de données et du formatage des données pour l'affichage dans l'interface utilisateur.
         \begin{figure}[H]
             \centering
             \includegraphics[width=400pt]{../Images/dashboard_flow1.png}
@@ -633,11 +636,11 @@ podman start dashboard
         \begin{figure}[H]
             \centering
             \includegraphics[width=300pt]{../Images/node_sql.png} 
-            \caption{Cette combinaison de noeuds envoie une requête SQL à la base de données pour récupérer les 1000 dernières valeurs d'un capteur}
+            \caption{Cette combinaison de noeuds envoie une requête SQL à la base de données pour récupérer les 1000 dernières valeurs d'un capteur.}
             \label{fig:sql}
         \end{figure}
         \vspace{1cm}
-        L'image montre deux nœuds dans un flux Node-RED.\newline Le premier nœud, étiqueté "SQL Request", est utilisé pour exécuter des requêtes SQL sur une base de données.\newline Ce nœud est configuré pour envoyer une requête SQL à la base données, récupérer les valeurs et les transmettre sous forme de message msg.payload au nœud suivant dans le flux.
+        L'image montre deux nœuds dans un flux Node-RED.\newline Le premier nœud, étiqueté "SQL Request", est utilisé pour exécuter des requêtes SQL sur une base de données.\newline Ce nœud est configuré pour récupérer les valeurs et les transmettre sous forme de message msg.payload au nœud suivant dans le flux.
 
         \vspace{0.5cm}
 Le second nœud, étiqueté "project-db", représente la base de données à laquelle la requête SQL est envoyée (projet-db).\newline Ce nœud est configuré avec les informations de connexion nécessaires pour accéder à la base de données "project-db" cf Figure \ref{fig:bdd}.\newline Une fois la requête exécutée, les résultats sont renvoyés au nœud "SQL Request", qui les transmet ensuite au reste du flux.
@@ -668,7 +671,7 @@ Le second nœud, étiqueté "project-db", représente la base de données à laq
             \label{fig:chart}
         \end{figure}
         \newpage
-        \subsubsection{Code de conversion des données de la base de données pour l'affichage}
+        \subsubsection{Code de conversion du format des données pour l'affichage}
         Les données sont ensuite affichées dans un graphique montrant l'historique des mesures.
         \vspace{0.5cm}
         \begin{lstlisting}[style=javascript, caption={Code Javascript de transformation des données de la base de données pour l'affichage dans les graphiques de l'interface utilisateur}]
@@ -700,7 +703,7 @@ Le second nœud, étiqueté "project-db", représente la base de données à laq
     return msg;
         \end{lstlisting}
         \vspace{0.5cm}
-Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d'une requête MySQL pour les adapter à un graphique.\newline Il extrait les données de `msg.payload` et les reformate en objets avec des timestamps convertis en millisecondes et des valeurs associées.\newline Ces objets sont stockés dans un tableau `formattedData`.\newline Ensuite, les données formatées sont structurées dans `msg.payload` avec des séries, des données et des labels, puis renvoyées pour être utilisées par un nœud de visualisation graphique.
+Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d'une requête MySQL pour les adapter à un graphique.\newline Il extrait les données de `msg.payload` et les reformate en objets avec des horodatages convertis en millisecondes et des valeurs associées.\newline Ces objets sont stockés dans un tableau `formattedData`.\newline Ensuite, les données formatées sont structurées dans `msg.payload` avec des séries, des données et des labels, puis renvoyées pour être utilisées par un nœud de visualisation graphique.
         
         \newpage
         \subsubsection{CSS Custom}
@@ -803,7 +806,7 @@ Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d
         \newpage
         \subsubsection{Flow 2 :}
         \vspace{0.5cm}
-        Le flow 2 est en charge de la souscription au broker MQTT et de l'affichage en temps réel des données dans l'interface utilisateur.
+        Le flow 2 est en charge de la souscription (subscribe) au broker MQTT et de l'affichage en temps réel des données dans l'interface utilisateur.
         \vspace{0.5cm}
         \begin{figure}[H]
             \centering
@@ -830,12 +833,12 @@ Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d
         \begin{figure}[H]
             \centering
             \includegraphics[width=400pt]{../Images/dashboard_data.png}
-            \caption{Interface utilisateur de visualisation de l'Historique des données des capteurs}
+            \caption{Interface utilisateur de visualisation de l'historique des données des capteurs}
             \label{fig:dashboard_data}
         \end{figure}
         \vspace{0.5cm}
 
-        Les données en temps réel sont récupérées depuis mosquitto en souscrivant au topic correspondant au capteur et affiche les données dans un graphique.
+        Les données en temps réel sont récupérées depuis Mosquitto en souscrivant au topic correspondant au capteur et affiche les données dans un graphique.
         \vspace{0.5cm}
         \begin{figure}[H]
             \centering
@@ -849,7 +852,7 @@ Ce code JavaScript, utilisé dans un nœud Node-RED, transforme les résultats d
         \vspace{0.5cm}
         Ce script est en charge du transfert des données depuis MQTT vers la base de données MariaDB. \newline 
         Une instance du script est lancée par capteur.\newline
-        Ce script fonctionne sur une base d'interruptions, chaque fois que le broker MQTT publie une donnée une interruption est générée et la donnée est envoyé dans la base.
+        Ce script fonctionne sur une base d'interruptions, chaque fois que le broker MQTT publie, une donnée une interruption est générée et la donnée est envoyé dans la base.
         \vspace{0.5cm}
         \begin{lstlisting}[style=C, caption={Vérification de la bonne utilisation du script}]
 if(argc < 8){ // Usage
@@ -969,7 +972,7 @@ PRIMARY KEY (`id`)
 
         \newpage
         \subsection{Broker MQTT}
-        \subsubsection{Récupération de l'image Eclipse}
+        \subsubsection{Récupération de l'image Mosquitto Eclipse}
         Le conteneur OCI du broker MQTT est basé sur l'image officielle de Eclipse avec une configuration personnalisée.
         \begin{lstlisting}[style=bash, caption={Récupération du conteneur officiel eclipse-mosquitto}]
 podman pull docker.io/eclipse-mosquitto
@@ -993,13 +996,14 @@ listener 1883
 listener 9001
 protocol websockets
 password_file /mosquitto/config/passwd.txt
+allow_anonymous false
         \end{lstlisting}
         \newpage
 
         \subsection{Lancement automatisé des conteneurs et scripts}
-        Les conteneurs et scripts utilisés dans ce système sont lancés de manière automatisée par une service managé par systemctl. Cela permet  une automatisation du lancement et une journalisation des événements.
+        Les conteneurs et scripts utilisés dans ce système sont lancés de manière automatisée par un service managé par systemctl. Cela permet  une automatisation du lancement et une journalisation des événements.
         \subsubsection{Service de lancement des conteneurs}
-        \begin{lstlisting}[style=bash, caption={Fichier de configuration du service systemctl du lancement des conteneurs}]
+        \begin{lstlisting}[style=bash, caption={Fichier de configuration du service systemctl de lancement des conteneurs OCI}]
 [Unit]
 Description=Script de lancement des conteneurs
 After=network.target
@@ -1010,13 +1014,13 @@ Restart=always
 WantedBy=default.target
         \end{lstlisting}
 
-        \subsubsection{Script de lancement des conteneurs}
-        \begin{lstlisting}[style=bash, caption={Script de lancement des conteneurs}]
+        \subsubsection{Script de lancement des conteneurs OCI}
+        \begin{lstlisting}[style=bash, caption={Script de lancement des conteneurs OCI}]
 #!/bin/bash
 sleep 10
 podman start mariadb
 sleep 5
-podman start mqtt
+podman start mosquitto-projet
 sleep 5
 podman start dashboard
 while true
@@ -1037,11 +1041,11 @@ Restart=always
 WantedBy=default.target
         \end{lstlisting}
         \newpage
-        \subsection{Envoie de mails}
+        \subsection{Envoi de mails}
         L'envoi de mails d'alertes est géré par un noeud NodeRed qui appelle un script python quand un seuil de PPM est dépassé.
         Ce script python utilise le serveur SMTP de Gmail pour la maquette et sera relié au serveur SMTP Outlook durant sa mise en place réelle.
         \subsubsection{Script Python}
-        \begin{lstlisting}[style=python, caption={Script python d'envoie de mails}]
+        \begin{lstlisting}[style=python, caption={Script python d'envoi de mails}]
 import smtplib
 from email.mime.text import MIMEText
 
@@ -1128,7 +1132,7 @@ html_content = """
         \begin{figure}[H]
             \centering
             \includegraphics[width=400pt]{../Images/script_node.png} 
-            \caption{Noeud d'appel du script d'envois de mails}
+            \caption{Noeud d'appel du script d'envoi de mails}
             \label{fig:node_script}
         \end{figure}
         \begin{figure}[H]
@@ -1145,8 +1149,9 @@ html_content = """
 
         \subsubsection{Matériel Utilisé :}
         Microcontrôleur utilisé : ESP32\newline
-        Carte de développement ESP32 WT32-ETH01\newline
+        Carte de développement : ESP32 WT32-ETH01\newline
         Convertisseur UART vers USB: CH340G\newline
+        % TODO Lien datasheet
         \begin{figure}[H]
             \centering
             \includegraphics[width=200pt]{../Images/ESP32.png} 
@@ -1195,7 +1200,7 @@ gpio_set_level(16, 1); // Applique une tension de 3.3v sur le pin Enable de la p
         Il commence par définir une configuration par défaut pour l'EMAC (Ethernet MAC) de l'ESP32, en spécifiant l'utilisation d'une horloge externe pour le mode RMII (Reduced Media Independent Interface) et en assignant un GPIO pour l'horloge.\newline
         Ensuite, il initialise la configuration MAC avec des paramètres par défaut et un temps de réinitialisation logicielle de 1000 ms.\newline
         La fonction \texttt{esp\_eth\_mac\_new\_esp32} est utilisée pour créer une instance de la couche MAC avec ses configurations.\newline
-        Le code enregistre également une configuration par défaut pour la puce PHY (Physical Layer), en définissant son adresse I2C et en désactivant la réinitialisation matérielle.\newline
+        Le code enregistre également une configuration par défaut pour la puce PHY (Physical Layer), en définissant son adresse I2C et en désactivant la réinitialisation matérielle.\newline %TODO Expliquer I2C
         Enfin, il crée une nouvelle instance de la configuration Ethernet en combinant les configurations MAC et PHY, permettant ainsi à l'ESP32 de communiquer via Ethernet.
 
         \newpage
@@ -1205,7 +1210,7 @@ ESP_ERROR_CHECK(esp_eth_driver_install(&eth_config, &eth_handle)); // Install th
 ESP_LOGI("Driver :", "esp_eth_driver_install done");
         \end{lstlisting}
         \vspace{0.5cm}
-        Ce code utilise la fonction \texttt{esp\_eth\_driver\_install} pour installer et initialiser le pilote Ethernet sur un ESP32, en utilisant la configuration Ethernet définie précédemment.\newline
+        Ce code utilise la fonction \texttt{esp\_eth\_driver\_install} pour installer et initialiser le pilote Ethernet sur l'ESP32, en utilisant la configuration Ethernet définie précédemment.\newline
         La fonction \texttt{ESP\_ERROR\_CHECK} est utilisée pour vérifier que l'installation s'est déroulée sans erreur.\newline
         Une fois l'installation réussie, un message de log est enregistré pour indiquer que le pilote Ethernet a été correctement installé.\newline 
         Cela permet de s'assurer que le périphérique est prêt à gérer les communications Ethernet.
@@ -1246,6 +1251,7 @@ ESP_ERROR_CHECK(esp_eth_start(eth_handle)); // Start Ethernet interface
         \end{lstlisting}
         \vspace{0.5cm}
 
+        %TODO Changer le paragraphe ci dessous
         Un gestionnaire d'événements Ethernet pour ESP32 utilisant ESP-IDF est une fonction qui gère divers événements liés à la connectivité Ethernet.\newline
         Dans le code fourni, \texttt{eth\_event\_handler} est appelé chaque fois qu'un événement Ethernet se produit, comme la connexion, la déconnexion, le démarrage ou l'arrêt de l'interface Ethernet.\newline
         Par exemple, lorsque l'ESP32 se connecte à un réseau Ethernet \newline (\texttt{ETHERNET\_EVENT\_CONNECTED}), il récupère et affiche l'adresse MAC de l'interface.\newline
@@ -1277,7 +1283,8 @@ esp_netif_attach(eth_netif, esp_eth_new_netif_glue(eth_handle)); // attach Ether
         \end{lstlisting}
 
         \vspace{0.5cm}
-        Ce code est utilisé dans le contexte de l'ESP32 pour attacher le pilote Ethernet à la pile TCP/IP, permettant ainsi la communication réseau.\newline La fonction \texttt{esp\_netif\_attach} est appelée avec deux arguments : \texttt{eth\_netif}, qui représente l'interface réseau précédemment créée, et \newline \texttt{esp\_eth\_new\_netif\_glue(eth\_handle)}, qui crée une "colle" ou un adaptateur entre le pilote Ethernet et l'interface réseau.\newline Cette étape est cruciale car elle lie le matériel Ethernet (représenté par \texttt{eth\_handle}) à la pile réseau logicielle, permettant à l'ESP32 de envoyer et recevoir des données via Ethernet.\newline En effectuant cette attache, l'ESP32 est prêt à participer à des communications réseau, comme l'envoi et la réception de paquets de données.
+        %TODO Refaire la fin
+        Ce code est utilisé dans le contexte de l'ESP32 pour attacher le pilote Ethernet à la pile TCP/IP, permettant ainsi la communication réseau.\newline La fonction \texttt{esp\_netif\_attach} est appelée avec deux arguments : \texttt{eth\_netif}, qui représente l'interface réseau précédemment créée, et \newline \texttt{esp\_eth\_new\_netif\_glue(eth\_handle)}, qui crée une "colle" ou un adaptateur entre le pilote Ethernet et l'interface réseau.\newline 
 
         \newpage
         \subsubsection{Configuration IP de la carte}
@@ -1293,6 +1300,7 @@ ESP_ERROR_CHECK(esp_netif_set_ip_info(eth_netif, &ip_info));
         \end{lstlisting}
 
         \vspace{0.5cm}
+        %TODO Changer paragraphe ci dessous
         Ce code configure une adresse IP statique pour l'ESP32, remplaçant l'utilisation du protocole DHCP pour obtenir automatiquement une adresse IP.\newline Tout d'abord, le service DHCP est arrêté avec \texttt{esp\_netif\_dhcpc\_stop(eth\_netif)} pour permettre la configuration manuelle de l'adresse IP.\newline Ensuite, une structure \texttt{esp\_netif\_ip\_info\_t} est utilisée pour définir les informations IP.\newline L'adresse IP de l'ESP32 est définie sur \texttt{192.168.1.2}, la passerelle par défaut sur \texttt{192.168.1.1}, et le masque de sous-réseau sur \texttt{255.255.255.0}.\newline Ces adresses sont converties du format texte en format binaire à l'aide de \texttt{inet\_addr}.\newline Enfin, la configuration IP est appliquée à l'interface réseau avec \newline \texttt{esp\_netif\_set\_ip\_info(eth\_netif, \&ip\_info)}, ce qui permet à l'ESP32 de communiquer sur le réseau local avec l'adresse IP statique spécifiée.\newline
 
         \newpage
@@ -1311,6 +1319,7 @@ static void got_ip_event_handler(void *arg, esp_event_base_t event_base,
 }
       \end{lstlisting}
       \vspace{0.5cm}
+      %TODO Changer texte
       Ce code définit un gestionnaire d'événements pour l'ESP32 qui est appelé lorsqu'une adresse IP est attribuée à l'interface réseau.\newline La fonction \texttt{got\_ip\_event\_handler} est déclenchée en réponse à un événement spécifique indiquant que l'ESP32 a obtenu une adresse IP.\newline À l'intérieur de cette fonction, \texttt{event\_data} est converti en un pointeur de type \texttt{ip\_event\_got\_ip\_t}, ce qui permet d'accéder aux détails de l'événement.\newline Ensuite, les informations IP contenues dans cet événement sont extraites et stockées dans une structure \texttt{esp\_netif\_ip\_info\_t}.\newline Bien que le code soit incomplet, il est généralement utilisé pour afficher ou utiliser l'adresse IP attribuée, la passerelle et le masque de sous-réseau, permettant ainsi à l'ESP32 de communiquer sur le réseau avec les paramètres IP appropriés.
 
       \newpage
@@ -1335,6 +1344,7 @@ if(mqtt_handle == NULL){
 ESP_ERROR_CHECK(esp_mqtt_client_start(mqtt_handle)); // Start the mqtt client
 
       \end{lstlisting}
+      %TODO Changer texte
       Ce code configure un client MQTT pour l'ESP32 afin de se connecter à un broker MQTT.\newline La structure \texttt{esp\_mqtt\_client\_config\_t} est utilisée pour définir les paramètres de configuration du client MQTT.\newline Le broker MQTT est spécifié avec l'adresse IP \texttt{192.168.1.1} et le port \texttt{9001}, utilisant le transport WebSocket (\texttt{MQTT\_TRANSPORT\_OVER\_WS}).\newline L'intervalle de keepalive est défini à 120 secondes pour maintenir la connexion active.\newline Aucun nom d'utilisateur ni mot de passe n'est configuré, mais un identifiant client, "Capteur 1", est attribué pour identifier le client MQTT.\newline Ensuite, \texttt{esp\_mqtt\_client\_init} est appelé avec cette configuration pour initialiser le client MQTT et obtenir un handle.\newline Si l'initialisation échoue, un message d'erreur est enregistré ; sinon, un message de confirmation indique que l'initialisation du client MQTT a réussi.
       \newpage
 
@@ -1377,6 +1387,7 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 }
       \end{lstlisting}
 
+      %TODO Changer Texte
       La configuration d'un gestionnaire d'événements pour un client MQTT sur l'ESP32 se fait en enregistrant une fonction de rappel avec \texttt{esp\_mqtt\_client\_register\_event}.\newline Cette fonction, nommée \texttt{mqtt\_event\_handler}, est appelée pour gérer divers événements MQTT.\newline Elle est configurée pour répondre à tous les types d'événements MQTT.\newline
 
 Dans le gestionnaire d'événements, différents cas sont traités en fonction de l'\texttt{event\_id}.\newline Par exemple, lors de la connexion au broker MQTT, un message est enregistré et une variable \texttt{CONNECTED} est mise à jour.\newline En cas de déconnexion, cette variable est réinitialisée.\newline D'autres événements, comme la publication de messages ou la réception de données, sont également gérés avec des messages de journalisation appropriés.\newline En cas d'erreur, des détails supplémentaires sont enregistrés pour faciliter le diagnostic.\newline Ce gestionnaire permet de surveiller et de réagir efficacement aux différents états et événements du client MQTT.
@@ -1400,7 +1411,7 @@ Dans le gestionnaire d'événements, différents cas sont traités en fonction d
           \item Benzène (C6H6)
           \item Alcool (C2H5OH)
           \item Dioxyde d'azote (NO2)
-          \item fumée
+          \item Fumée
       \end{itemize}
 
     \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
@@ -1429,6 +1440,7 @@ Dans le gestionnaire d'événements, différents cas sont traités en fonction d
    }
 
       \newpage
+      %TODO Mettre à jour la conclusion
       \section{Conclusion}
         Travailler au sein d'une structure aussi importante et diversifiée que Hager Group m'a offert une expérience enrichissante et formatrice. J'ai eu l'opportunité d'explorer et de mettre en pratique des compétences variées, allant de la gestion du parc informatique à la communication entre les PC de production et les automates. Cette expérience m'a permis de comprendre l'importance de l'intégration entre les technologies de l'information (IT) et les technologies opérationnelles (OT), élément indispensable au bon fonctionnement d'une entreprise industrielle.\newline
 
