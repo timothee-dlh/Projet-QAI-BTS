@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "esp_event.h"
 #include "esp_log.h"
 #include "esp_netif.h"
@@ -9,7 +10,11 @@
 #include "esp_eth_mac_esp.h"
 #include "driver/gpio.h"
 #include "mqtt_client.h"
+#include "hal/adc_types.h"
+#include "esp_adc/adc_oneshot.h"
 
+
+// TODO:Comment code 
 static const char *TAG = "ETH";
 static int CONNECTED = 0;    
 esp_eth_handle_t eth_handle = NULL;
@@ -38,6 +43,7 @@ static void eth_event_handler(void *arg, esp_event_base_t event_base,
         break;
     }
 }
+
 static void got_ip_event_handler(void *arg, esp_event_base_t event_base,
                                  int32_t event_id, void *event_data)
 {
@@ -76,7 +82,6 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
         ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
         if (event->error_handle->error_type == MQTT_ERROR_TYPE_TCP_TRANSPORT) {
             ESP_LOGI(TAG, "Last errno string (%s)", strerror(event->error_handle->esp_transport_sock_errno));
-
         }
         break;
     default:
@@ -151,8 +156,8 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_netif_dhcpc_stop(eth_netif)); // Stop DHCP service to use Static IP conf
 
     esp_netif_ip_info_t ip_info;
-    ip_info.ip.addr    = inet_addr("192.168.1.2"); // IP Configuration of the esp32
-    ip_info.gw.addr    = inet_addr("192.168.1.1");
+    ip_info.ip.addr    = inet_addr("192.168.253.62"); // IP Configuration of the esp32
+    ip_info.gw.addr    = inet_addr("192.168.253.254");
     ip_info.netmask.addr = inet_addr("255.255.255.0");
     ESP_ERROR_CHECK(esp_netif_set_ip_info(eth_netif, &ip_info));
     
@@ -162,18 +167,31 @@ void app_main(void)
         ESP_LOGI("NETIF :", "Interface is down");
     }
 
-    ESP_LOGI(TAG, "Static IP set: 192.168.1.2");
+    ESP_LOGI(TAG, "Static IP set: 192.168.253.62");
 
+    adc_oneshot_unit_init_cfg_t unit_cfg = {
+        .unit_id = ADC_UNIT_2,
+        .ulp_mode = ADC_ULP_MODE_DISABLE
+    };
+    adc_oneshot_unit_handle_t adc_handle;
+    adc_oneshot_new_unit(&unit_cfg, &adc_handle);
+    adc_oneshot_chan_cfg_t adc_chan_config ={
+        .atten = ADC_ATTEN_DB_0,
+        .bitwidth = ADC_BITWIDTH_DEFAULT
+    };
+
+    adc_oneshot_config_channel(adc_handle, ADC_CHANNEL_0, &adc_chan_config);
     /*
      *MQTT Client configuration
      */
     esp_mqtt_client_config_t mqtt_cfg = { 
-        .broker.address.hostname = "192.168.1.1",
+        .broker.address.hostname = "192.168.253.63",
         .broker.address.port = 9001,
         .broker.address.transport = MQTT_TRANSPORT_OVER_WS,
         .session.keepalive = 120, // Increase keepalive interval
-        .credentials.username = NULL,
-        .credentials.authentication.password = NULL,
+        .credentials.username = "esp",
+        .credentials.authentication.password = "esp",
+        .credentials.client_id = "Capteur 1"
     };
     esp_mqtt_client_handle_t mqtt_handle = esp_mqtt_client_init(&mqtt_cfg); // Create a handle to mqtt client
 
@@ -186,10 +204,21 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_mqtt_client_start(mqtt_handle)); // Start the mqtt client
     ESP_LOGI("MQTT :", "mqtt started");
 
+    int adc_result = 0;
+    char ppm_str[100] = "";
+    float PARA = 116.6020682;
+    float PARB = 2.769034857;
+    float RZERO = 76.63;
+
     while(1){
         if(CONNECTED == 1){
-            esp_mqtt_client_publish(mqtt_handle, "test", "123", 0, 0, 0);
-            vTaskDelay(pdMS_TO_TICKS(1000));
+            adc_oneshot_read(adc_handle, ADC_CHANNEL_0, &adc_result); // Read value on sensor pin
+            float res_sensor = (4096./(float)adc_result) * 5. -1. * 20.;
+            float ppm = PARA * pow((res_sensor/RZERO), -PARB);
+
+            itoa(ppm, ppm_str, 10); // Conversion of read value
+            esp_mqtt_client_publish(mqtt_handle, "capteur1", ppm_str, 0, 0, 0); // Publish value to the MQTT Broker
+            vTaskDelay(pdMS_TO_TICKS(10000)); // Take measure every 10 secondes
         } else {
             ESP_LOGI("MQTT :", "MQTT not connected");
             vTaskDelay(pdMS_TO_TICKS(1000));
