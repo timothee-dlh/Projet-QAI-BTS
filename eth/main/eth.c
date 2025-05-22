@@ -176,7 +176,7 @@ void app_main(void)
     adc_oneshot_unit_handle_t adc_handle;
     adc_oneshot_new_unit(&unit_cfg, &adc_handle);
     adc_oneshot_chan_cfg_t adc_chan_config ={
-        .atten = ADC_ATTEN_DB_0,
+        .atten = ADC_ATTEN_DB_12, // Mesure de 100mV à 2.450V
         .bitwidth = ADC_BITWIDTH_DEFAULT
     };
 
@@ -205,24 +205,26 @@ void app_main(void)
     ESP_LOGI("MQTT :", "mqtt started");
 
     int adc_result = 0;
-    char ppm_str[100] = "";
-    float PARA = 116.6020682;
-    float PARB = 2.769034857;
-    float RZERO = 76.63;
+    char adc_result_str[100] = "";
+    int RLOAD = 10;
+    int RZERO = 76;
+    int PARA = 116;
+    int PARB = 2;
 
     while(1){
         if(CONNECTED == 1){
             adc_oneshot_read(adc_handle, ADC_CHANNEL_0, &adc_result); // Read value on sensor pin
-            float res_sensor = (4096./(float)adc_result) * 5. -1. * 20.;
+            float voltage_result = adc_result * 3.3 / 4096; // Res of sensor in kOhm 
+            float res_sensor = (3.3 / voltage_result -1) * RLOAD;
             float ppm = PARA * pow((res_sensor/RZERO), -PARB);
+            if (ppm > 10000) ppm = 10000;
 
-            itoa(ppm, ppm_str, 10); // Conversion of read value
-            esp_mqtt_client_publish(mqtt_handle, "capteur1", ppm_str, 0, 0, 0); // Publish value to the MQTT Broker
-            vTaskDelay(pdMS_TO_TICKS(10000)); // Take measure every 10 secondes
+            sprintf(adc_result_str, "%f", ppm);
+            esp_mqtt_client_publish(mqtt_handle, "capteur1", adc_result_str, 0, 0, 0); // Publish value to the MQTT Broker
+            vTaskDelay(pdMS_TO_TICKS(1000)); // Take measure every 1 secondes
         } else {
             ESP_LOGI("MQTT :", "MQTT not connected");
             vTaskDelay(pdMS_TO_TICKS(1000));
         }
     }
 }
-
